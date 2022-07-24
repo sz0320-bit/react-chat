@@ -14,7 +14,7 @@ const Type = ({onSubmit}) => {
 
     return (
         <>
-            <form onSubmit={submitTask} className={`w-screen border rounded-xl  h-[7.4%] absolute bottom-0 flex justify-evenly items-center`}>
+            <form onSubmit={submitTask} className={`w-screen  rounded-xl bg-black-500 h-[7.4%] absolute bottom-0 flex justify-evenly items-center`}>
                 <input ref={ref} type={"text"} className={`border p-3 primary border-white h-10 w-[70%] rounded-3xl`}
                        onChange={(e) => setText(e.target.value) }>
                 </input>
