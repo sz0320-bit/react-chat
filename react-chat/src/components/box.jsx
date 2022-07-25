@@ -6,6 +6,7 @@ import {useAuthState} from "react-firebase-hooks/auth";
 import firebase from "../firebase";
 import {BiLogOut} from "react-icons/all.js";
 import {db,auth} from "../firebase";
+import { query, orderBy, limit } from "firebase/firestore";
 
 const Box = () => {
     const [chat,setChat] = useState([]);
@@ -15,15 +16,18 @@ const Box = () => {
     const getData = async () => {
 
 
+        try {
 
-
-        mainRef.onSnapshot(async (snapshot) => {
-            await snapshot.forEach(doc => {
-                setChat(doc.data().chats);
-                console.log(doc.data().chats);
-            });
-        });
-
+            mainRef.orderBy('createdAt').limit(25).onSnapshot((async (snapshot) => {
+                let nret = [];
+                await snapshot.forEach(doc => {
+                    nret.push(doc.data());
+                });
+                setChat(nret);
+            }));
+        }catch (e) {
+            console.log(e);
+        }
 
     }
 
@@ -32,31 +36,26 @@ const Box = () => {
     },[]);
 
     const addChat = (text) => {
+        const tempKey = randomKey();
         let ret = {
             text: text,
             user: user.uid,
-            id: randomKey(),
+            id: tempKey,
             name:user.displayName
         }
         setChat(chat.concat(ret));
+        mainRef.add({
+            text: text,
+            user: user.uid,
+            id: tempKey,
+            name:user.displayName,
+            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        })
     }
 
     const initialRender = useRef(0);
 
-    useEffect(() => {
-        if (initialRender.current < 1) {
-            initialRender.current += 1;
-            console.log('first run')
-            bottomRef.current?.scrollIntoView({behavior: 'smooth'});
-        }else {
-            console.log("update");
 
-            chatsRef.set({
-                "chats": chat
-            })
-            bottomRef.current?.scrollIntoView({behavior: 'smooth'});
-        }
-    }, [chat]);
 
     const randomKey = () => {
         const ret =  Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
@@ -93,7 +92,7 @@ const Box = () => {
     const checkConsecutive = (x,y) => {
         if(y === undefined){
             return true;
-        }else if(x.user === y.user  || x.user === user.uid){
+        }else if(x.user === y.user || x.user === user.uid){
             return false;
         }else{
             return true;
@@ -112,7 +111,7 @@ const Box = () => {
                 <BiLogOut className="text-2xl  lg:text-3xl  textColor" />
             </button>
             {chat.map((chats,index) => (
-            <Chat  key={chats.id} index={index} group={checkGroup(chats.user,chat[index-1])} cons={checkConsecutive(chats,chat[index-1])} user={chats.user} name={chats.name} text={chats.text}/>
+            <Chat  key={chats.id} index={index} id={chats.id} group={checkGroup(chats.user,chat[index-1])} cons={checkConsecutive(chats,chat[index-1])} user={chats.user} name={chats.name} text={chats.text}/>
             ))}
             <div ref={bottomRef}/>
         </div >
