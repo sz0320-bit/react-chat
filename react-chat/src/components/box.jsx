@@ -35,7 +35,8 @@ const Box = () => {
         let ret = {
             text: text,
             user: user.uid,
-            id: randomKey()
+            id: randomKey(),
+            name:user.displayName
         }
         setChat(chat.concat(ret));
     }
@@ -79,7 +80,13 @@ const Box = () => {
     }
 
 
-
+    const checkGroup = (x,y) => {
+        if(y !== undefined) {
+            return x === y.user;
+        }else{
+            return false;
+        }
+    }
 
     return (
 
@@ -92,8 +99,8 @@ const Box = () => {
             <button className={"absolute left-5 top-5"} onClick={logOut}>
                 <BiLogOut className="text-2xl lg:text-3xl  textColor" />
             </button>
-            {chat.map((chat) => (
-            <Chat  key={chat.id} user={chat.user} text={chat.text}/>
+            {chat.map((chats,index) => (
+            <Chat  key={chats.id} index={index} group={checkGroup(chats.user,chat[index-1])} user={chats.user} name={chats.name} text={chats.text}/>
             ))}
         </div>
 
