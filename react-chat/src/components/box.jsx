@@ -11,6 +11,7 @@ const Box = () => {
     const [chat,setChat] = useState([]);
     const chatsRef = db.doc('chats/main');
     const mainRef = db.collection('chats');
+    const bottomRef = useRef(null);
     const getData = async () => {
 
 
@@ -28,7 +29,6 @@ const Box = () => {
 
     useEffect(() => {
         getData();
-
     },[]);
 
     const addChat = (text) => {
@@ -47,12 +47,14 @@ const Box = () => {
         if (initialRender.current < 1) {
             initialRender.current += 1;
             console.log('first run')
+            bottomRef.current?.scrollIntoView({behavior: 'smooth'});
         }else {
             console.log("update");
 
             chatsRef.set({
                 "chats": chat
             })
+            bottomRef.current?.scrollIntoView({behavior: 'smooth'});
         }
     }, [chat]);
 
@@ -88,6 +90,16 @@ const Box = () => {
         }
     }
 
+    const checkConsecutive = (x,y) => {
+        if(y === undefined){
+            return true;
+        }else if(x.user === y.user || y.user === user.uid || x.user === user.uid){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
     return (
 
 
@@ -95,14 +107,15 @@ const Box = () => {
 
             { user ?
                 <>
-        <div className={` w-screen h-[92.5%] absolute flex justify-end  flex-col py-5 `}>
-            <button className={"absolute left-5 top-5"} onClick={logOut}>
-                <BiLogOut className="text-2xl lg:text-3xl  textColor" />
+        <div className={` w-screen overflow-scroll no-scrollbar overflow-x-hidden h-[92.5%] absolute  flex justify-start flex-col py-5 `}>
+            <button className={"fixed  left-5 top-5"} onClick={logOut}>
+                <BiLogOut className="text-2xl  lg:text-3xl  textColor" />
             </button>
             {chat.map((chats,index) => (
-            <Chat  key={chats.id} index={index} group={checkGroup(chats.user,chat[index-1])} user={chats.user} name={chats.name} text={chats.text}/>
+            <Chat  key={chats.id} index={index} group={checkGroup(chats.user,chat[index-1])} cons={checkConsecutive(chats,chat[index-1])} user={chats.user} name={chats.name} text={chats.text}/>
             ))}
-        </div>
+            <div ref={bottomRef}/>
+        </div >
 
         <Type onSubmit={addChat}/>
             </> :

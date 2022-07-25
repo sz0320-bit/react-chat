@@ -2,7 +2,7 @@ import firebase, {auth} from "../firebase.js";
 import {useAuthState} from "react-firebase-hooks/auth";
 
 
-const Chat = ({user,text,group,name}) => {
+const Chat = ({user,text,group,name,index,cons}) => {
     const [users,load] = useAuthState(firebase.auth());
 
     //functions that gets the first word from a string
@@ -14,7 +14,7 @@ const Chat = ({user,text,group,name}) => {
 * */
 
     return (
-        <div className={`w-screen px-5 py-1 flex gap-1 ${!group && user !==  users.uid ? 'mt-2':''} items-center ${user ===  users.uid ? 'justify-end':''}`}>
+        <div className={`w-screen px-2.5 ${cons && index !== 0 ? 'mt-6':''} ${index === 0 ? 'mt-auto': ''} py-1 flex gap-1 ${!group && user !==  users.uid ? 'mt-2':''} items-center ${user ===  users.uid ? 'justify-end':''}`}>
             {user !== users.uid ? <div>
 
                 <div className={`w-8 rounded-[5em] flex justify-center items-center h-[90%] border ${group ? 'invisible':''}`}>{name[0].toUpperCase()}</div>

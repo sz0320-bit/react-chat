@@ -17,4 +17,6 @@
 body{
     @apply primary !important;
 }
-
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
