@@ -93,7 +93,7 @@ const Box = () => {
     const checkConsecutive = (x,y) => {
         if(y === undefined){
             return true;
-        }else if(x.user === y.user || y.user === user.uid || x.user === user.uid){
+        }else if(x.user === y.user  || x.user === user.uid){
             return false;
         }else{
             return true;

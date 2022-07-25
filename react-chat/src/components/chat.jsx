@@ -19,8 +19,11 @@ const Chat = ({user,text,group,name,index,cons}) => {
 
                 <div className={`w-8 rounded-[5em] flex justify-center items-center h-[90%] border ${group ? 'invisible':''}`}>{name[0].toUpperCase()}</div>
             </div> : null}
-            <div className={`w-max h-fit py-1.5  px-5  flex justify-center items-center ${user ===  users.uid ? "bg-blue-600":"bg-gray-700 "} rounded-3xl `}>
+            <div className={'w-max'}>
+                {user !== users.uid && !group ? <div className={'absolute mt-[-1.1rem] ml-3 text-[0.75rem] text-gray-300'}>{getFirstWord(name)}</div> : null}
+            <div className={`w-fit h-fit py-1.5  px-5  flex justify-center items-center ${user ===  users.uid ? "bg-blue-600":"bg-gray-700 "} rounded-3xl `}>
                 {text}
+            </div>
             </div>
             {user === users.uid ? <div>
 
