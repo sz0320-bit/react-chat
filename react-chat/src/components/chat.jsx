@@ -14,7 +14,7 @@ const Chat = ({user,text,group,name,index,cons}) => {
 * */
 
     return (
-        <div className={`w-screen px-2.5 ${cons && index !== 0 ? 'mt-6':''} ${index === 0 ? 'mt-auto': ''} py-1 flex gap-1 ${!group && user !==  users.uid ? 'mt-2':''} items-center ${user ===  users.uid ? 'justify-end':''}`}>
+        <div className={`w-screen px-2.5 ${cons && index !== 0 ? 'mt-5':''} ${index === 0 ? 'mt-auto': ''} py-1 flex gap-1 ${!group && user !==  users.uid ? 'mt-7':''} items-center ${user ===  users.uid ? 'justify-end':''}`}>
             {user !== users.uid ? <div>
 
                 <div className={`w-8 rounded-[5em] flex justify-center items-center h-[90%] border ${group ? 'invisible':''}`}>{name[0].toUpperCase()}</div>
