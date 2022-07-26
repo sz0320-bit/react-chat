@@ -13,17 +13,24 @@ const Box = () => {
     const chatsRef = db.doc('chats/main');
     const mainRef = db.collection('chats');
     const bottomRef = useRef(null);
+
+    //function that reverses an array
+    const reverse = (arr) => {
+        return arr.slice(0).reverse();
+    }
+
     const getData = async () => {
 
 
         try {
 
-            mainRef.orderBy('createdAt').limit(25).onSnapshot((async (snapshot) => {
+            mainRef.orderBy('createdAt', "desc").limit(50).onSnapshot((async (snapshot) => {
                 let nret = [];
                 await snapshot.forEach(doc => {
                     nret.push(doc.data());
                 });
-                setChat(nret);
+                setChat(reverse(nret));
+
             }));
         }catch (e) {
             console.log(e);
@@ -33,17 +40,15 @@ const Box = () => {
 
     useEffect(() => {
         getData();
+
     },[]);
+
+    useEffect(() => {
+        {bottomRef.current !== null ? bottomRef.current.scrollIntoView({behavior: "smooth"}) : null}
+    },[chat]);
 
     const addChat = (text) => {
         const tempKey = randomKey();
-        let ret = {
-            text: text,
-            user: user.uid,
-            id: tempKey,
-            name:user.displayName
-        }
-        setChat(chat.concat(ret));
         mainRef.add({
             text: text,
             user: user.uid,
@@ -53,7 +58,6 @@ const Box = () => {
         })
     }
 
-    const initialRender = useRef(0);
 
 
 
@@ -106,7 +110,7 @@ const Box = () => {
 
             { user ?
                 <>
-        <div className={` w-screen overflow-scroll no-scrollbar overflow-x-hidden h-[92.5%] absolute  flex justify-start flex-col py-5 `}>
+        <div className={` w-screen overflow-scroll  no-scrollbar overflow-x-hidden h-[92.5%] absolute  flex justify-start flex-col py-5 `}>
             <button className={"fixed  left-5 top-5"} onClick={logOut}>
                 <BiLogOut className="text-2xl  lg:text-3xl  textColor" />
             </button>
