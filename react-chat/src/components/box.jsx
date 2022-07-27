@@ -4,9 +4,18 @@ import Type from "./Type.jsx";
 import {Enter} from "./Enter.jsx";
 import {useAuthState} from "react-firebase-hooks/auth";
 import firebase from "../firebase";
-import {BiLogOut} from "react-icons/all.js";
+import {BiLogOut,MdOutlineReadMore} from "react-icons/all.js";
 import {db,auth} from "../firebase";
+import {AnimatePresence, motion} from "framer-motion";
 import { query, orderBy, limit } from "firebase/firestore";
+
+
+function LogOut({onClick}) {
+    return <button className={"fixed bg-white rounded p-0.5 text-black left-5 top-5"} onClick={onClick}>
+        <MdOutlineReadMore color="black" className="text-2xl fill-black lg:text-3xl "/>
+    </button>;
+}
+
 
 const Box = () => {
     const [chat,setChat] = useState([]);
@@ -30,7 +39,6 @@ const Box = () => {
                     nret.push(doc.data());
                 });
                 setChat(reverse(nret));
-
             }));
         }catch (e) {
             console.log(e);
@@ -40,7 +48,6 @@ const Box = () => {
 
     useEffect(() => {
         getData();
-
     },[]);
 
     useEffect(() => {
@@ -85,6 +92,10 @@ const Box = () => {
     }
 
 
+    const [show,setShow] = useState(false);
+
+
+
     const checkGroup = (x,y) => {
         if(y !== undefined) {
             return x === y.user;
@@ -107,21 +118,45 @@ const Box = () => {
 
 
         <>
+            { user  ?
 
-            { user ?
                 <>
-        <div className={` w-screen overflow-scroll  no-scrollbar overflow-x-hidden h-[92.5%] absolute  flex justify-start flex-col py-5 `}>
-            <button className={"fixed  left-5 top-5"} onClick={logOut}>
-                <BiLogOut className="text-2xl  lg:text-3xl  textColor" />
-            </button>
-            {chat.map((chats,index) => (
-            <Chat  key={chats.id} index={index} id={chats.id} group={checkGroup(chats.user,chat[index-1])} cons={checkConsecutive(chats,chat[index-1])} user={chats.user} name={chats.name} text={chats.text}/>
-            ))}
-            <div ref={bottomRef}/>
-        </div >
 
-        <Type onSubmit={addChat}/>
-            </> :
+                        <div>
+                            <div
+                                className={` w-screen overflow-scroll  no-scrollbar overflow-x-hidden h-[92.5%]  absolute  flex justify-start flex-col py-5 `}>
+                                <LogOut onClick={() => setShow(true)}/>
+                                {chat.map((chats, index) => (
+                                    <Chat key={chats.id}
+                                          index={index}
+                                          id={chats.id}
+                                          group={checkGroup(chats.user, chat[index - 1])}
+                                          cons={checkConsecutive(chats, chat[index - 1])}
+                                          user={chats.user}
+                                          name={chats.name}
+                                          text={chats.text}/>
+                                ))}
+                                <div ref={bottomRef}/>
+                            </div>
+
+                            <Type onSubmit={addChat}/>
+                            <AnimatePresence>{show && <motion.div
+                                className={' w-[75%] lg:w-[20em] md:w-[20em] h-[100%] fixed glass flex justify-center '}
+                                initial={{x:-300}}
+                                animate={{x:0}}
+                                exit={{x:-300}}
+                                transition={{
+                                    duration: 0.3,
+                                    bounce: 0
+                                }}>
+                                <button className={"absolute bg-white rounded p-0.5 text-black  top-5 w-[90%] flex justify-center"} onClick={() => setShow(!show)}>
+                                    <MdOutlineReadMore color="black"  className="text-2xl fill-black lg:text-3xl rotate "/>
+                                </button>
+                                <input type={"button"} value={'SIGN OUT'} onClick={logOut} className={`shadow-2xl font-mono absolute bottom-5 h-fit w-[90%] py-2 bg-red-700 rounded-xl`}/>
+
+                            </motion.div>}</AnimatePresence>
+                        </div>
+                </> :
                 <Enter onClick={signWithGoogle}/>
             }
         </>
