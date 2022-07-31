@@ -8,7 +8,7 @@ import PrivateRoute from "./privateroute.jsx";
 import {AuthProvider} from "./AuthContext.jsx";
 import {LandingRoute} from "./components/LandingRoute.jsx";
 
-const App = () => {
+export const App = () => {
 
 
     const [user,load] = useAuthState(auth());
@@ -27,4 +27,3 @@ return (
 )
 }
 
-export default App;
