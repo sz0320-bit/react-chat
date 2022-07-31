@@ -21,7 +21,7 @@ function LogOut({onClick}) {
 
 
 const Box = () => {
-    const [chat,setChat] = useState([]);
+    const [chat,setChat] = useState(null);
     const [loading,setLoading] = useState(true);
     const chatsRef = db.doc('chats/main');
     const mainRef = db.collection('chats');
@@ -43,6 +43,7 @@ const Box = () => {
                     nret.push(doc.data());
                 });
                 setChat(reverse(nret));
+                setLoading(false);
             }));
         }catch (e) {
             console.log(e);
@@ -52,7 +53,6 @@ const Box = () => {
 
     useEffect(() => {
             getData();
-        setLoading(false)
         console.log(user);
     },[]);
 
@@ -113,6 +113,21 @@ const Box = () => {
         }
     }
 
+    const checkCol = (x,y) => {
+        if(y === undefined || x === undefined || x === null || y === null) {
+            return false;
+        }else if(x.user === y.user){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+
+
+
+
+
     return (
 
 
@@ -130,6 +145,8 @@ const Box = () => {
                                           id={chats.id}
                                           group={checkGroup(chats.user, chat[index - 1])}
                                           cons={checkConsecutive(chats, chat[index - 1])}
+                                          below={checkCol(chat[index + 1], chats)}
+                                          above={checkCol(chat[index - 1], chats)}
                                           user={chats.user}
                                           name={chats.name}
                                           text={chats.text}/>
