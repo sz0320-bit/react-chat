@@ -7,7 +7,7 @@ import {Switch, Route, Router, BrowserRouter} from "react-router-dom";
 import PrivateRoute from "./privateroute.jsx";
 import {LandingRoute} from "./components/LandingRoute.jsx";
 
-export const Appss = () => {
+export const App = () => {
 
 
     const [user,load] = useAuthState(auth());
