@@ -8,6 +8,8 @@ import {BiLogOut,MdOutlineReadMore} from "react-icons/all.js";
 import {db,auth} from "../firebase";
 import {AnimatePresence, motion} from "framer-motion";
 import { query, orderBy, limit } from "firebase/firestore";
+import {Route, useHistory} from "react-router-dom";
+import ReactLoading from "react-loading";
 
 
 function LogOut({onClick}) {
@@ -17,8 +19,10 @@ function LogOut({onClick}) {
 }
 
 
+
 const Box = () => {
     const [chat,setChat] = useState([]);
+    const [loading,setLoading] = useState(true);
     const chatsRef = db.doc('chats/main');
     const mainRef = db.collection('chats');
     const bottomRef = useRef(null);
@@ -27,7 +31,7 @@ const Box = () => {
     const reverse = (arr) => {
         return arr.slice(0).reverse();
     }
-
+    const [user,load] = useAuthState(auth());
     const getData = async () => {
 
 
@@ -47,7 +51,9 @@ const Box = () => {
     }
 
     useEffect(() => {
-        getData();
+            getData();
+        setLoading(false)
+        console.log(user);
     },[]);
 
     useEffect(() => {
@@ -73,22 +79,15 @@ const Box = () => {
         return ret;
     }
 
-    const signWithGoogle = () => {
-        let googleAuthProvider = new firebase.auth.GoogleAuthProvider();
-        firebase.auth().signInWithPopup(googleAuthProvider)
-            .then(result => {
-                console.log(result);
-            })
-            .catch(error => {
-                console.log(error);
-            })
-    }
+   const history = useHistory();
 
-    const [user,load] = useAuthState(firebase.auth());
+    const logOut = async () => {
+        await firebase.auth().signOut()
+            .then(() => {
+                history.push("/login");
+                console.log("logout");
+            })
 
-    const logOut = () => {
-        firebase.auth().signOut();
-        console.log("logout");
     }
 
 
@@ -105,7 +104,7 @@ const Box = () => {
     }
 
     const checkConsecutive = (x,y) => {
-        if(y === undefined){
+        if(y === undefined || x === undefined || x === null || y === null) {
             return true;
         }else if(x.user === y.user || x.user === user.uid){
             return false;
@@ -118,15 +117,14 @@ const Box = () => {
 
 
         <>
-            { user  ?
-
-                <>
-
                         <div>
                             <div
                                 className={` w-screen overflow-scroll  no-scrollbar overflow-x-hidden h-[92.5%]  absolute  flex justify-start flex-col py-5 `}>
                                 <LogOut onClick={() => setShow(true)}/>
-                                {chat.map((chats, index) => (
+                                {!loading ?
+                                <>
+                                { chat !== null ? chat.map((chats, index) => (
+                                    <AnimatePresence key={chats.id}>
                                     <Chat key={chats.id}
                                           index={index}
                                           id={chats.id}
@@ -135,7 +133,10 @@ const Box = () => {
                                           user={chats.user}
                                           name={chats.name}
                                           text={chats.text}/>
-                                ))}
+                                    </AnimatePresence>
+                                )): <div className={`flex justify-center items-center h-[100%] w-[100%]`}><div>Error</div></div>}
+                                </> : <div className={`w-[100%] h-[100%] absolute flex justify-center items-center `}> <ReactLoading type={'bars'} color={'white'} height={'20%'} width={'20%'} /></div>
+                                }
                                 <div ref={bottomRef}/>
                             </div>
 
@@ -156,9 +157,7 @@ const Box = () => {
 
                             </motion.div>}</AnimatePresence>
                         </div>
-                </> :
-                <Enter onClick={signWithGoogle}/>
-            }
+
         </>
     )
 }
