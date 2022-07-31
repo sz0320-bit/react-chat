@@ -2,7 +2,6 @@ import {auth} from "../firebase.js";
 import {Link, useHistory,Redirect} from "react-router-dom";
 import {useContext, useEffect} from "react";
 import {useAuthState} from "react-firebase-hooks/auth";
-import {AuthContext} from "../AuthContext.jsx";
 
 
 export const Enter = () => {

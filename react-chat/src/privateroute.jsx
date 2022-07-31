@@ -2,7 +2,6 @@ import {Redirect, Route} from "react-router-dom";
 import {useAuthState} from "react-firebase-hooks/auth";
 import {auth} from "./firebase.js";
 import {useContext} from "react";
-import {AuthContext} from "./AuthContext.jsx";
 import ReactLoading from 'react-loading';
 import {useAuthListener} from "./AuthStatus.jsx";
 

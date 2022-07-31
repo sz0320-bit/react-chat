@@ -5,10 +5,9 @@ import {useAuthState} from "react-firebase-hooks/auth";
 import firebase from "./firebase.js";
 import {Switch, Route, Router, BrowserRouter} from "react-router-dom";
 import PrivateRoute from "./privateroute.jsx";
-import {AuthProvider} from "./AuthContext.jsx";
 import {LandingRoute} from "./components/LandingRoute.jsx";
 
-export const App = () => {
+export const Appss = () => {
 
 
     const [user,load] = useAuthState(auth());
