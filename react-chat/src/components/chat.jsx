@@ -5,7 +5,7 @@ import {motion} from "framer-motion";
 
 const Chat = ({user,text,group,name,index,cons,above,below,avatar}) => {
     const [users,load] = useAuthState(firebase.auth());
-    const pic = users.photoURL;
+    const pic = avatar;
     //functions that gets the first word from a string
     const getFirstWord = (str) => {
         return str.split(" ")[0];
@@ -30,14 +30,14 @@ const Chat = ({user,text,group,name,index,cons,above,below,avatar}) => {
                     <div  className={`w-8 rounded-[5em] flex justify-center items-center h-7 border  ${group ? 'invisible':''}`}>{name[0].toUpperCase()}</div>
                 }
             </div> : null}
-            <div className={'w-max break-all'}>
+            <div className={'w-max max-w-[75%] break-all'}>
                 {user !== users.uid && !group ? <div className={'absolute mt-[-1.1rem] ml-3 text-[0.75rem] text-gray-300'}>{getFirstWord(name)}</div> : null}
-            <div className={`w-fit break-normal h-fit py-1.5 ${above && user ===users.uid && 'rounded-tr-[5px]'} ${below && user ===users.uid && 'rounded-br-[5px]'} ${above && user !==  users.uid && 'rounded-tl-[5px]'} ${below && user !==  users.uid && 'rounded-bl-[5px]'}  px-5  flex justify-center items-center ${user ===  users.uid ? "bg-blue-600":"bg-gray-700 "} rounded-3xl  `}>
+            <div className={`w-fit break-normal  h-fit py-1.5 ${above && user ===users.uid && 'rounded-tr-[5px]'} ${below && user ===users.uid && 'rounded-br-[5px]'} ${above && user !==  users.uid && 'rounded-tl-[5px]'} ${below && user !==  users.uid && 'rounded-bl-[5px]'}  px-5  flex justify-center items-center ${user ===  users.uid ? "bg-blue-600":"bg-gray-700 "} rounded-3xl  `}>
                 {text}
             </div>
             </div>
             {user === users.uid ? <div>
-                {avatar ? <div  className={`w-8 rounded-[5em] flex justify-center items-center h-8 border  ${group ? 'invisible':''}`} style={{backgroundImage:`url(${avatar})`, backgroundSize:'100% 100%'}}></div>
+                {pic ? <div  className={`w-8 rounded-[5em] flex justify-center items-center h-8 border  ${group ? 'invisible':''}`} style={{backgroundImage:`url(${pic})`, backgroundSize:'100% 100%'}}></div>
                     :
                     <div  className={`w-8 rounded-[5em] flex justify-center items-center h-7 border  ${group ? 'invisible':''}`}>{name[0].toUpperCase()}</div>
                 }
