@@ -3,7 +3,7 @@ import {useAuthState} from "react-firebase-hooks/auth";
 import {motion} from "framer-motion";
 
 
-const Chat = ({user,text,group,name,index,cons,above,below}) => {
+const Chat = ({user,text,group,name,index,cons,above,below,avatar}) => {
     const [users,load] = useAuthState(firebase.auth());
     const pic = users.photoURL;
     //functions that gets the first word from a string
@@ -25,7 +25,10 @@ const Chat = ({user,text,group,name,index,cons,above,below}) => {
             exit={{opacity:0,scale:0.5}}
             className={`w-screen px-2.5 ${cons && index !== 0 ? 'mt-5':''}   ${index === 0 ? 'mt-auto': ''}   ${above || below ? 'py-0.5' : 'py-1'} flex gap-1 ${!group && user !==  users.uid && index !== 0 ? 'mt-7':''} ${!group && user ===  users.uid && index !== 0 ? 'mt-1':''} items-center ${user ===  users.uid ? 'justify-end':''}`}>
             {user !== users.uid ? <div>
-                <div  className={`w-8 rounded-[5em] flex justify-center items-center h-7 border  ${group ? 'invisible':''}`}>{name[0].toUpperCase()}</div>
+                {avatar ? <div  className={`w-8 rounded-[5em] flex justify-center items-center h-8 border  ${group ? 'invisible':''}`} style={{backgroundImage:`url(${avatar})`, backgroundSize:'100% 100%'}}></div>
+                    :
+                    <div  className={`w-8 rounded-[5em] flex justify-center items-center h-7 border  ${group ? 'invisible':''}`}>{name[0].toUpperCase()}</div>
+                }
             </div> : null}
             <div className={'w-max break-all'}>
                 {user !== users.uid && !group ? <div className={'absolute mt-[-1.1rem] ml-3 text-[0.75rem] text-gray-300'}>{getFirstWord(name)}</div> : null}
@@ -34,9 +37,10 @@ const Chat = ({user,text,group,name,index,cons,above,below}) => {
             </div>
             </div>
             {user === users.uid ? <div>
-
-                <div  className={`w-8 rounded-[5em] flex justify-center  items-center h-7 border ${group ? 'invisible':''}`}>{name[0].toUpperCase()}
-                </div>
+                {avatar ? <div  className={`w-8 rounded-[5em] flex justify-center items-center h-8 border  ${group ? 'invisible':''}`} style={{backgroundImage:`url(${avatar})`, backgroundSize:'100% 100%'}}></div>
+                    :
+                    <div  className={`w-8 rounded-[5em] flex justify-center items-center h-7 border  ${group ? 'invisible':''}`}>{name[0].toUpperCase()}</div>
+                }
             </div>: null}
         </motion.div>
     )

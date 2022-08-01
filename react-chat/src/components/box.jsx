@@ -67,7 +67,8 @@ const Box = () => {
             user: user.uid,
             id: tempKey,
             name:user.displayName,
-            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+            createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+            avatar: user.photoURL
         })
     }
 
@@ -149,6 +150,7 @@ const Box = () => {
                                           above={checkCol(chat[index - 1], chats)}
                                           user={chats.user}
                                           name={chats.name}
+                                          avatar={chats.avatar}
                                           text={chats.text}/>
                                     </AnimatePresence>
                                 )): <div className={`flex justify-center items-center h-[100%] w-[100%]`}><div>Error</div></div>}
