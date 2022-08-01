@@ -161,7 +161,7 @@ const Box = () => {
 
                             <Type onSubmit={addChat}/>
                             <AnimatePresence>{show && <motion.div
-                                className={' w-[75%] lg:w-[20em] md:w-[20em] h-[100%] fixed glass flex justify-center '}
+                                className={' w-[75%] lg:w-[20em]  md:w-[20em] h-[100%] fixed glass flex justify-center '}
                                 initial={{x:-300}}
                                 animate={{x:0}}
                                 exit={{x:-300}}
