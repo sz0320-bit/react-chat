@@ -18,17 +18,16 @@ export const App = () => {
 return (
     <>
         <BrowserRouter>
-            <Route
-                render={({location}) => (
+
             <AnimatePresence exitBeforeEnter>
-                <Switch location={location} key={location.pathname}>
+                <Switch>
                     <Route path={"/"} exact component={LandingRoute}/>
                     <Route exact path={"/login"} component={Enter}/>
                     <PrivateRoute exact userIs={true} path={"/main"} component={Box}/>
                     <PrivateRoute exact userIs={true} path={"/user"} component={UserInfo}/>
                 </Switch>
             </AnimatePresence>
-            )}/>
+
     </BrowserRouter>
 
     </>

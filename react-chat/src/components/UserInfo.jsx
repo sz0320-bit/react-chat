@@ -5,6 +5,7 @@ import {useAuthState} from "react-firebase-hooks/auth";
 import {Sidebar} from "./Sidebar.jsx";
 import {AnimatePresence,motion} from "framer-motion";
 import SidebarButton from "./SidebarButton.jsx";
+import {useHistory} from "react-router-dom";
 
 export const UserInfo= () => {
 
@@ -45,6 +46,17 @@ export const UserInfo= () => {
         getUser();
     },[]);
 
+    const history = useHistory();
+
+    const logOut = async () => {
+        await firebase.auth().signOut()
+            .then(() => {
+                history.push("/login");
+                console.log("logout");
+            })
+
+    }
+
     return(
         <motion.div
             initial={{opacity:0}}
@@ -60,7 +72,7 @@ export const UserInfo= () => {
                     <div className={`text-[1.75em]`}>{name}</div>
                 </div>
             </div>
-            <AnimatePresence>{showSidebar && <Sidebar onClick={() => setShowSidebar(!showSidebar)}/>}</AnimatePresence>
+            <AnimatePresence>{showSidebar && <Sidebar logOut={logOut} onClick={() => setShowSidebar(!showSidebar)}/>}</AnimatePresence>
         </motion.div>
     )
 }

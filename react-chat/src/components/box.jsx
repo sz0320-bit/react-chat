@@ -123,7 +123,7 @@ const Box = () => {
         return ret;
     }
 
-   const history = useHistory();
+
 
 
 
@@ -160,7 +160,17 @@ const Box = () => {
         }
     }
 
+    const history = useHistory();
 
+
+    const logOut = async () => {
+        await firebase.auth().signOut()
+            .then(() => {
+                history.push("/login");
+                console.log("logout");
+            })
+
+    }
 
 
 
@@ -200,7 +210,7 @@ const Box = () => {
                             </div>
 
                             <Type onSubmit={addChat}/>
-                            <AnimatePresence>{show && <Sidebar onClick={() => setShow(!show)}/>}</AnimatePresence>
+                            <AnimatePresence>{show && <Sidebar logOut={logOut} onClick={() => setShow(!show)}/>}</AnimatePresence>
                         </motion.div>
 
 

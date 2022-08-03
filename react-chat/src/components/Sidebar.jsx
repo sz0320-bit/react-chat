@@ -4,18 +4,11 @@ import firebase from "../firebase.js";
 import {useHistory} from "react-router-dom";
 
 
-export const Sidebar = ({onClick}) => {
+export const Sidebar = ({onClick,logOut}) => {
 
     const history = useHistory();
 
-    const logOut = async () => {
-        await firebase.auth().signOut()
-            .then(() => {
-                history.push("/login");
-                console.log("logout");
-            })
 
-    }
 
 
      return  (
