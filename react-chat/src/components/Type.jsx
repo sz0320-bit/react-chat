@@ -16,7 +16,6 @@ const Type = ({onSubmit}) => {
 
 
     const enterHandler = (e) => {
-        console.log(e);
         if (e.key === 'Enter' && ref.current.innerText === '') {
             e.preventDefault();
         }
@@ -25,11 +24,15 @@ const Type = ({onSubmit}) => {
     return (
         <>
             <form onSubmit={submitTask} name={'main-form'} className={`w-full h-fit   py-3  primary rounded-xl bg-black-500 h-min-[7.4%]  absolute bottom-0 flex  items-center`}>
-                <div className={'w-screen mx-3 h-fit p-1.5 primary min-h-[2.75em] border flex items-center rounded-3xl'}>
+                <motion.div
+                    transition={{duration: 0.3}}
+                    className={'w-screen mx-3 h-fit p-1.5 primary min-h-[2.75em] border flex items-center rounded-3xl'}>
 
-                <div contentEditable onKeyDown={(e) => enterHandler(e)}  ref={ref}  className={` px-1.5   border-none primary duration-200 outline-none md:w-[95%] lg:w-[97%] w-[80%] h-fit   rounded-3xl`}
+                <motion.div
+                    transition={{duration: 0.3}}
+                    contentEditable onKeyDown={(e) => enterHandler(e)}  ref={ref}  className={` px-1.5   border-none primary duration-200 outline-none w-full h-fit   rounded-3xl`}
                        onInput={(e) => setText(e.currentTarget.innerText) }>
-                </div>
+                </motion.div>
 
                     {ref.current !== null  &&
                         <><AnimatePresence>{  ref.current.innerText !== '' && ref.current.innerText !== '\n' &&
@@ -51,7 +54,7 @@ const Type = ({onSubmit}) => {
                         </>
 
                     }
-            </div>
+            </motion.div>
             </form>
         </>
     )

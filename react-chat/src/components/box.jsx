@@ -10,13 +10,11 @@ import {AnimatePresence, motion} from "framer-motion";
 import { query, orderBy, limit } from "firebase/firestore";
 import {Route, useHistory} from "react-router-dom";
 import ReactLoading from "react-loading";
+import {Sidebar} from "./Sidebar";
+import SidebarButton from "./SidebarButton";
 
 
-function LogOut({onClick}) {
-    return <button className={"fixed bg-white rounded p-0.5 text-black left-5 top-5"} onClick={onClick}>
-        <MdOutlineReadMore color="black" className="text-2xl fill-black lg:text-3xl "/>
-    </button>;
-}
+
 
 
 
@@ -32,6 +30,7 @@ const Box = () => {
         return arr.slice(0).reverse();
     }
     const [user,load] = useAuthState(auth());
+    const userFetch = db.collection("users").doc(`${user.uid}`);
     const getData = async () => {
 
 
@@ -51,8 +50,41 @@ const Box = () => {
 
     }
 
+    const [nameU,setName] =  useState(null);
+
+    const [avatar,setAvatar] = useState(null);
+
+
+    const getUser = async () => {
+
+        try {
+
+            userFetch.onSnapshot((async (snapshot) => {
+                if(snapshot.exists){
+                    console.log(snapshot.data());
+                    setName(snapshot.data().name);
+                    setAvatar(snapshot.data().profilePic);
+                }else{
+                    console.log("no data");
+                    await userFetch.set({
+                        userID: user.uid,
+                        profilePic: user.photoURL,
+                        name:user.displayName,
+                        email:user.email,
+                    });
+                }
+            }));
+        }catch (e) {
+            console.log(e);
+        }
+
+    }
+
+
+
     useEffect(() => {
             getData();
+            getUser();
         console.log(user);
     },[]);
 
@@ -60,15 +92,26 @@ const Box = () => {
         {bottomRef.current !== null ? bottomRef.current.scrollIntoView({behavior: "smooth"}) : null}
     },[chat]);
 
+
+
+
     const addChat = (text) => {
+
+
+
+        let nameHold = null;
+        let avatarHold = null;
+        {nameU !== null ? nameHold = nameU : nameHold = user.displayName}
+        {avatar !== null ? avatarHold = avatar : avatarHold = user.photoURL}
+
         const tempKey = randomKey();
         mainRef.add({
             text: text,
             user: user.uid,
             id: tempKey,
-            name:user.displayName,
+            name:nameHold,
             createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-            avatar: user.photoURL
+            avatar: avatarHold
         })
     }
 
@@ -82,14 +125,7 @@ const Box = () => {
 
    const history = useHistory();
 
-    const logOut = async () => {
-        await firebase.auth().signOut()
-            .then(() => {
-                history.push("/login");
-                console.log("logout");
-            })
 
-    }
 
 
     const [show,setShow] = useState(false);
@@ -132,11 +168,15 @@ const Box = () => {
     return (
 
 
-        <>
-                        <div>
+
+                        <motion.div
+                        initial={{opacity:0}}
+                        animate={{opacity:1}}
+                        exit={{opacity:0}}
+                        transition={{duration:0.2}}>
                             <div
                                 className={` w-screen overflow-scroll  no-scrollbar overflow-x-hidden h-[92.5%]  absolute  flex justify-start flex-col py-5 `}>
-                                <LogOut onClick={() => setShow(true)}/>
+                                <SidebarButton onClick={() => setShow(true)}/>
                                 {!loading ?
                                 <>
                                 { chat !== null ? chat.map((chats, index) => (
@@ -160,24 +200,10 @@ const Box = () => {
                             </div>
 
                             <Type onSubmit={addChat}/>
-                            <AnimatePresence>{show && <motion.div
-                                className={' w-[75%] lg:w-[20em]  md:w-[20em] h-[100%] fixed glass flex justify-center '}
-                                initial={{x:-300}}
-                                animate={{x:0}}
-                                exit={{x:-300}}
-                                transition={{
-                                    duration: 0.3,
-                                    bounce: 0
-                                }}>
-                                <button className={"absolute bg-white rounded p-0.5 text-black  top-5 w-[90%] flex justify-center"} onClick={() => setShow(!show)}>
-                                    <MdOutlineReadMore color="black"  className="text-2xl fill-black lg:text-3xl rotate "/>
-                                </button>
-                                <input type={"button"} value={'SIGN OUT'} onClick={logOut} className={`shadow-2xl font-mono absolute bottom-5 h-fit w-[90%] py-2 bg-red-700 rounded-xl`}/>
+                            <AnimatePresence>{show && <Sidebar onClick={() => setShow(!show)}/>}</AnimatePresence>
+                        </motion.div>
 
-                            </motion.div>}</AnimatePresence>
-                        </div>
 
-        </>
     )
 }
 
