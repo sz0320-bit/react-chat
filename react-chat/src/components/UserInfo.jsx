@@ -7,6 +7,8 @@ import {AnimatePresence,motion} from "framer-motion";
 import SidebarButton from "./SidebarButton.jsx";
 import {useHistory} from "react-router-dom";
 import {EditWindow} from "./editWindow";
+import holdsvg from "./images.jpeg";
+import {uploadBytes, getDownloadURL} from "firebase/storage";
 
 export const UserInfo= () => {
 
@@ -64,6 +66,23 @@ export const UserInfo= () => {
         });
     }
 
+    const updateImage = async (img) => {
+        const fileRef = firebase.storage().ref(`userPics/${users.uid}`);
+        uploadBytes(fileRef,img).then(async (snapshot) => {
+            console.log('uploaded');
+            getDownloadURL(snapshot.ref).then( url => {
+                userFetch.update({
+                    profilePic:url
+                });
+            });
+        });
+
+    }
+    const tryEdit = async () => {
+
+    }
+
+
 
     return(
         <>
@@ -80,7 +99,7 @@ export const UserInfo= () => {
                 <SidebarButton onClick={() => setShowSidebar(true)}/>
                 <div className={"h-fit p-8  w-screen flex justify-center items-center  gap-5 flex-col"}>
 
-                    <div style={{backgroundImage:`url(${avatar})`,backgroundSize:'cover'}} className={'h-[12em] rounded-[6em] w-[12em] border'}></div>
+                    <div style={{backgroundImage:`url(${avatar})`,backgroundSize:'contain'}} className={'h-[12em] rounded-[6em] w-[12em] border'}></div>
                     <div className={`text-[1.75em]`}>{name}</div>
                     <input type={"button"} value={'EDIT'} onClick={() => setShow(!show)} className={`shadow-2xl font-mono  top-[9em] h-fit w-[50%] py-2 bg-blue-700  rounded-xl`}/>
                 </div>
@@ -88,7 +107,7 @@ export const UserInfo= () => {
             <AnimatePresence>{showSidebar && <Sidebar logOut={logOut} onClick={() => setShowSidebar(!showSidebar)}/>}</AnimatePresence>
         </motion.div>
     <AnimatePresence>
-            {show && <EditWindow window={() => setShow(!show)} initialName={name} updateName={updateName}/>
+            {show && <EditWindow window={() => setShow(!show)} initialName={name} updateName={updateName} initialImage={avatar} updateImage={updateImage}/>
         }</AnimatePresence>
         </>
     )

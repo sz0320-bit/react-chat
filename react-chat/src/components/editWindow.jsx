@@ -2,14 +2,16 @@ import {motion} from "framer-motion";
 import {useState} from "react";
 
 
-export const EditWindow = ({window,initialName,updateName}) => {
+export const EditWindow = ({window,initialName,updateName,updateImage, initialImage}) => {
 
 
     const [name,setName] = useState(initialName);
+    const [image,setImage] = useState(initialImage);
 
     const handleChange = (e) => {
-        e.preventDefault();
-        updateName(name);
+        e.preventDefault()
+        {initialName !== name && updateName(name)}
+        {initialImage !== image && updateImage(image)}
         window();
     }
 
@@ -21,7 +23,8 @@ export const EditWindow = ({window,initialName,updateName}) => {
             transition={{duration:0.2}}
             className={`flex w-[100%] absolute h-[100%] justify-center items-center  lightglass`}>
             <div className={` h-[50%] w-[90%] shadow-2xl primary rounded-3xl flex flex-col justify-between py-5 items-center`}>
-                <div className={`flex justify-center items-center border h-[85%] w-[80%] rounded-3xl`}>
+                <div className={`flex justify-center items-center flex-col border h-[85%] w-[80%] rounded-3xl`}>
+                    <input type={"file"}  onChange={(e) => setImage(e.target.files[0])}/>
                     <input type={`text`} value={name} className={`primary border font-mono text-lg text-center rounded-lg h-12 w-[90%]`} onChange={(e) => setName(e.target.value)}/>
                 </div>
                 <div className={`flex justify-between items-center w-[80%] h-[10%] `}>

@@ -10,6 +10,8 @@ import {AnimatePresence, motion} from "framer-motion";
 import { query, orderBy, limit } from "firebase/firestore";
 import {Route, useHistory} from "react-router-dom";
 import ReactLoading from "react-loading";
+import holdsvg from './images.jpeg';
+import {uploadBytes} from "firebase/storage";
 import {Sidebar} from "./Sidebar";
 import SidebarButton from "./SidebarButton";
 
@@ -24,7 +26,6 @@ const Box = () => {
     const chatsRef = db.doc('chats/main');
     const mainRef = db.collection('chats');
     const bottomRef = useRef(null);
-
     //function that reverses an array
     const reverse = (arr) => {
         return arr.slice(0).reverse();
@@ -78,6 +79,7 @@ const Box = () => {
         }
 
     }
+
 
 
 
