@@ -2,6 +2,7 @@ import {auth} from "../firebase.js";
 import {Link, useHistory,Redirect} from "react-router-dom";
 import {useContext, useEffect} from "react";
 import {useAuthState} from "react-firebase-hooks/auth";
+import {motion} from "framer-motion";
 
 
 export const Enter = () => {
@@ -23,11 +24,16 @@ export const Enter = () => {
 
     return (
         <>
-            <div className={"h-[92.7vh] w-screen flex justify-center items-center "}>
+            <motion.div
+                initial={{opacity:0}}
+                animate={{opacity:1}}
+                exit={{opacity:0}}
+                transition={{duration:0.5}}
+                className={"h-[92.7vh] w-screen flex justify-center items-center "}>
                 <div className={"h-fit py-10 lg:w-[30em]  w-[20em] primary flex justify-center items-center shadow-2xl  rounded-2xl"}>
                         <input type={"button"} value={'Log in with Google'} onClick={signWithGoogle}  className={"bg-blue-600  h-10 w-fit px-7 text-white  rounded-xl text-lg shadow"}/>
                 </div>
-            </div>
+            </motion.div>
         </>
     )
 }

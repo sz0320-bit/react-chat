@@ -61,7 +61,6 @@ const Box = () => {
 
             userFetch.onSnapshot((async (snapshot) => {
                 if(snapshot.exists){
-                    console.log(snapshot.data());
                     setName(snapshot.data().name);
                     setAvatar(snapshot.data().profilePic);
                 }else{
@@ -85,7 +84,6 @@ const Box = () => {
     useEffect(() => {
             getData();
             getUser();
-        console.log(user);
     },[]);
 
     useEffect(() => {

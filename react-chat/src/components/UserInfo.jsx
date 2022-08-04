@@ -6,11 +6,13 @@ import {Sidebar} from "./Sidebar.jsx";
 import {AnimatePresence,motion} from "framer-motion";
 import SidebarButton from "./SidebarButton.jsx";
 import {useHistory} from "react-router-dom";
+import {EditWindow} from "./editWindow";
 
 export const UserInfo= () => {
 
 
     const [users,load] = useAuthState(firebase.auth());
+    const [show,setShow] = useState(false);
     const [showSidebar,setShowSidebar] = useState(false);
     const userFetch = db.collection("users").doc(`${users.uid}`);
     const [name,setName] = useState(null);
@@ -23,7 +25,6 @@ export const UserInfo= () => {
 
             userFetch.onSnapshot((async (snapshot) => {
                     if(snapshot.exists){
-                        console.log(snapshot.data());
                         setName(snapshot.data().name);
                         setAvatar(snapshot.data().profilePic);
                     }else{
@@ -57,7 +58,18 @@ export const UserInfo= () => {
 
     }
 
+    const updateName = async (name) => {
+        await userFetch.update({
+            name:name
+        });
+    }
+
+
     return(
+        <>
+
+
+
         <motion.div
             initial={{opacity:0}}
             animate={{opacity:1}}
@@ -70,9 +82,14 @@ export const UserInfo= () => {
 
                     <div style={{backgroundImage:`url(${avatar})`,backgroundSize:'cover'}} className={'h-[12em] rounded-[6em] w-[12em] border'}></div>
                     <div className={`text-[1.75em]`}>{name}</div>
+                    <input type={"button"} value={'EDIT'} onClick={() => setShow(!show)} className={`shadow-2xl font-mono  top-[9em] h-fit w-[50%] py-2 bg-blue-700  rounded-xl`}/>
                 </div>
             </div>
             <AnimatePresence>{showSidebar && <Sidebar logOut={logOut} onClick={() => setShowSidebar(!showSidebar)}/>}</AnimatePresence>
         </motion.div>
+    <AnimatePresence>
+            {show && <EditWindow window={() => setShow(!show)} initialName={name} updateName={updateName}/>
+        }</AnimatePresence>
+        </>
     )
 }
