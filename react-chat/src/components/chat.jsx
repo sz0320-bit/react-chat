@@ -1,6 +1,7 @@
 import firebase, {auth} from "../firebase.js";
 import {useAuthState} from "react-firebase-hooks/auth";
 import {motion} from "framer-motion";
+import {useHistory} from "react-router-dom";
 
 
 const Chat = ({user,text,group,name,index,cons,above,below,avatar}) => {
@@ -16,6 +17,7 @@ const Chat = ({user,text,group,name,index,cons,above,below,avatar}) => {
         return  str.trim();
     }
 
+    const history = useHistory();
 
 
 /*<div className={`absolute mt-[-1.75em] text-[15px] text-gray-300 ${group ? 'invisible':''}`}>{getFirstWord(name)}</div>
@@ -30,9 +32,9 @@ const Chat = ({user,text,group,name,index,cons,above,below,avatar}) => {
             exit={{opacity:0,scale:0.5}}
             className={`w-screen  px-2.5 ${cons && index !== 0 ? 'mt-5':''}   ${index === 0 ? 'mt-auto': ''}   ${above || below ? 'py-0.5' : 'py-1'} flex gap-1 ${!group && user !==  users.uid && index !== 0 ? 'mt-7':''} ${!group && user ===  users.uid && index !== 0 ? 'mt-1':''} items-center ${user ===  users.uid ? 'justify-end':''}`}>
             {user !== users.uid ? <div>
-                {avatar ? <div  className={`w-8  rounded-[5em] flex justify-center items-center h-8 border  ${group ? 'invisible':''}`} style={{backgroundImage:`url(${avatar})`, backgroundSize:'100% 100%'}}></div>
+                {avatar ? <div onClick={() => history.push(`profile/${user}`)}  className={`w-8  rounded-[5em] flex justify-center items-center h-8 border  ${group ? 'invisible':''}`} style={{backgroundImage:`url(${avatar})`, backgroundSize:'100% 100%'}}></div>
                     :
-                    <div  className={`w-8 rounded-[5em] flex justify-center items-center h-7 border  ${group ? 'invisible':''}`}>{name[0].toUpperCase()}</div>
+                    <div onClick={() => history.push(`profile/${user}`)}  className={`w-8 rounded-[5em] flex justify-center items-center h-7 border  ${group ? 'invisible':''}`}>{name[0].toUpperCase()}</div>
                 }
             </div> : null}
             <div className={'w-max max-w-[75%] break-all'}>
@@ -49,9 +51,9 @@ const Chat = ({user,text,group,name,index,cons,above,below,avatar}) => {
             </div>
             </div>
             {user === users.uid ? <div>
-                {pic ? <div  className={`w-8 rounded-[5em] flex justify-center items-center h-8 border  ${group ? 'invisible':''}`} style={{backgroundImage:`url(${pic})`, backgroundSize:'100% 100%'}}></div>
+                {pic ? <div onClick={() => history.push(`profile/${user}`)}  className={`w-8 rounded-[5em] flex justify-center items-center h-8 border  ${group ? 'invisible':''}`} style={{backgroundImage:`url(${pic})`, backgroundSize:'100% 100%'}}></div>
                     :
-                    <div  className={`w-8 rounded-[5em] flex justify-center items-center h-7 border  ${group ? 'invisible':''}`}>{name[0].toUpperCase()}</div>
+                    <div onClick={() => history.push(`profile/${user}`)}  className={`w-8 rounded-[5em] flex justify-center items-center h-7 border  ${group ? 'invisible':''}`}>{name[0].toUpperCase()}</div>
                 }
             </div>: null}
         </motion.div>

@@ -7,6 +7,7 @@ import {Switch, Route, Router, BrowserRouter} from "react-router-dom";
 import PrivateRoute from "./privateroute.jsx";
 import {UserInfo} from "./components/UserInfo.jsx";
 import {LandingRoute} from "./components/LandingRoute.jsx";
+import {ProfilePage} from "./components/profile.tsx";
 import {AnimatePresence} from "framer-motion";
 
 export const App = () => {
@@ -25,6 +26,7 @@ return (
                     <Route exact path={"/login"} component={Enter}/>
                     <PrivateRoute exact userIs={true} path={"/main"} component={Box}/>
                     <PrivateRoute exact userIs={true} path={"/user"} component={UserInfo}/>
+                    <PrivateRoute exact userIs={true} path={"/profile/:id"} component={ProfilePage}/>
                 </Switch>
             </AnimatePresence>
 
