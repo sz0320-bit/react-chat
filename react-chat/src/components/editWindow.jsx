@@ -35,10 +35,10 @@ export const EditWindow = ({window,initialName,updateName,updateImage, initialIm
             exit={{opacity:0}}
             transition={{duration:0.2}}
             className={`flex w-[100%] absolute h-[100%] justify-center items-center  lightglass`}>
-            <div className={` h-[50%] w-[90%] shadow-2xl primary rounded-3xl flex flex-col justify-between py-5 items-center`}>
+            <div className={` h-[27.5em] lg:h-[50%] w-[90%] shadow-2xl primary rounded-3xl flex flex-col justify-between py-5 items-center`}>
                 <div className={`flex justify-center items-center flex-col border h-[85%] w-[80%] rounded-3xl`}>
                     <DisplayImg key={preview} img={preview}/>
-                    <input type={"file"} className={`border h-min font-mono w-[90%] m-5`}  accept={"image/*"}  onChange={handleImgChange}/>
+                    <input type={"file"} className={`border text-center text-sm p-2 h-min font-mono w-[90%] m-5`}  accept={"image/*"}  onChange={handleImgChange}/>
                     <input type={`text`} value={name} className={`primary border font-mono text-lg text-center rounded-lg h-12 w-[90%]`} onChange={(e) => setName(e.target.value)}/>
                 </div>
                 <div className={`flex justify-between items-center w-[80%] h-[10%] `}>
