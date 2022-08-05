@@ -78,9 +78,7 @@ export const UserInfo= () => {
         });
 
     }
-    const tryEdit = async () => {
 
-    }
 
 
 
