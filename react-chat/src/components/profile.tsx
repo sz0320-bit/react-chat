@@ -1,4 +1,4 @@
-import firebase, {db} from "../firebase.js";
+import firebase, {db,auth} from "../firebase.js";
 import {useEffect, useState} from "react";
 import {useCollectionData} from "react-firebase-hooks/firestore";
 import {useAuthState} from "react-firebase-hooks/auth";
@@ -20,6 +20,9 @@ export const ProfilePage= ({match}) => {
 
     const [showSidebar,setShowSidebar] = useState(false);
     const userFetch = db.collection("users").doc(`${match.params.id}`);
+    // @ts-ignore
+    const [user,load] = useAuthState(auth());
+    const textUrl = db.collection('private-chats').doc(`${match.params.id}-${user.uid}`);
     const [name,setName] = useState(null);
     const [avatar,setAvatar] = useState(null);
 
@@ -58,7 +61,25 @@ export const ProfilePage= ({match}) => {
 
     }
 
-
+    const textReroute = async () => {
+        await textUrl.onSnapshot((async (snapshot) => {
+            if(snapshot.exists){
+                        history.push(`/chat/${match.params.id}-${user.uid}`);
+            }else{
+                const altUrl = db.doc(`private-chats/${user.uid}-${match.params.id}`);
+                altUrl.onSnapshot((async (snapshot) => {
+                    if(snapshot.exists){
+                        history.push(`/chat/${user.uid}-${match.params.id}`);
+                    }else{
+                        await textUrl.set({
+                            user1 : user.uid,
+                            user2 : match.params.id
+                        });
+                    }
+                }));
+            }
+        }));
+    }
 
 
 
@@ -81,6 +102,7 @@ export const ProfilePage= ({match}) => {
                     <div className={"h-fit p-8  w-screen flex justify-center items-center  gap-5 flex-col"}>
                         <div style={{backgroundImage:`url(${avatar})`,backgroundSize:'contain'}} className={'h-[12em] rounded-[6em] w-[12em] border'}></div>
                         <div className={`text-[1.75em]`}>{name}</div>
+                        <input type={"button"} value={'TEXT'} onClick={textReroute} className={`shadow-2xl font-mono  top-[9em] h-fit w-[50%] py-2 bg-blue-700  rounded-xl`}/>
                     </div>
                 </div>
                 <AnimatePresence>{showSidebar && <Sidebar logOut={logOut} onClick={() => setShowSidebar(!showSidebar)}/>}</AnimatePresence>

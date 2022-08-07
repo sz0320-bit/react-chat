@@ -9,6 +9,7 @@ import {UserInfo} from "./components/UserInfo.jsx";
 import {LandingRoute} from "./components/LandingRoute.jsx";
 import {ProfilePage} from "./components/profile.tsx";
 import {AnimatePresence} from "framer-motion";
+import {PrivateBox} from "./components/PrivateChat.jsx";
 
 export const App = () => {
 
@@ -27,6 +28,7 @@ return (
                     <PrivateRoute exact userIs={true} path={"/main"} component={Box}/>
                     <PrivateRoute exact userIs={true} path={"/user"} component={UserInfo}/>
                     <PrivateRoute exact userIs={true} path={"/profile/:id"} component={ProfilePage}/>
+                    <PrivateRoute exact userIs={true} path={"/chat/:id"} component={PrivateBox}/>
                 </Switch>
             </AnimatePresence>
 
