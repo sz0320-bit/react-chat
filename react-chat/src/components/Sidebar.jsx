@@ -2,13 +2,61 @@ import {MdOutlineReadMore} from "react-icons/all.js";
 import {motion} from "framer-motion";
 import firebase from "../firebase.js";
 import {useHistory} from "react-router-dom";
+import {db,auth} from "../firebase";
+import {useEffect, useState} from "react";
 
 
 export const Sidebar = ({onClick,logOut}) => {
 
     const history = useHistory();
+    const [loadChat,setLoadChat] = useState([]);
 
 
+    const chatsUserRef = db.collection("private-chats")
+        .where("user1", "in", ["1FtkixYTCaSc4JnDu7zB8kscokh1"]);
+    const chatsUserRef2 = db.collection("private-chats")
+        .where("user2", "in", ["1FtkixYTCaSc4JnDu7zB8kscokh1"]);
+
+    const displayChats = async () => {
+        let nRet = [];
+        chatsUserRef.onSnapshot((async (snapshot) => {
+            snapshot.forEach(doc => {
+                nRet.push(doc.data());
+                setLoadChat(nRet);
+                let holdRoute =  db.collection(`private-chats/${doc.id}/messages`).limit(1).orderBy("createdAt", "desc");
+                let textHold = [];
+                holdRoute.onSnapshot(async (snapshot) => {
+                    snapshot.forEach(doc => {
+                        textHold.push(doc.data());
+                    });
+                    console.log(textHold);
+                });
+            });
+        }));
+        chatsUserRef2.onSnapshot((async (snapshot) => {
+            snapshot.forEach(doc => {
+                nRet.push(doc.data());
+                setLoadChat(nRet);
+                let holdRoute =  db.collection(`private-chats/${doc.id}/messages`).limit(1).orderBy("createdAt", "desc");
+                let textHold = [];
+                holdRoute.onSnapshot(async (snapshot) => {
+                    snapshot.forEach(doc => {
+                       textHold.push(doc.data());
+                    });
+                    console.log(textHold);
+                });
+
+            });
+        }));
+
+    }
+
+    useEffect(() => {
+        displayChats();
+    },[]);
+    useEffect(() => {
+        console.log(loadChat);
+    },[loadChat]);
 
 
      return  (
