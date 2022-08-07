@@ -35,3 +35,14 @@ body{
 .rotate{
     transform: rotate(180deg);
 }
+
+.widthadjust{
+    width: calc(100% - 80px);
+}
+
+.nohyph{
+    -webkit-hyphens: auto;
+    -moz-hyphens: auto;
+    -ms-hyphens: auto;
+    hyphens: auto;
+}

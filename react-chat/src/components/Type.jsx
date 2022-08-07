@@ -30,7 +30,7 @@ const Type = ({onSubmit}) => {
 
                 <motion.div
                     transition={{duration: 0.3}}
-                    contentEditable onKeyDown={(e) => enterHandler(e)}  ref={ref}  className={` px-1.5   border-none primary duration-200 outline-none w-full h-fit   rounded-3xl`}
+                    contentEditable onKeyDown={(e) => enterHandler(e)}  ref={ref}  className={` px-1.5   border-none primary duration-200 outline-none widthadjust h-fit   rounded-3xl`}
                        onInput={(e) => setText(e.currentTarget.innerText) }>
                 </motion.div>
 
