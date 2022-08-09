@@ -67,13 +67,14 @@ export const ProfilePage= ({match}) => {
                         history.push(`/chat/${match.params.id}-${user.uid}`);
             }else{
                 const altUrl = db.doc(`private-chats/${user.uid}-${match.params.id}`);
-                altUrl.onSnapshot((async (snapshot) => {
+                altUrl.get().then((async (snapshot) => {
                     if(snapshot.exists){
                         history.push(`/chat/${user.uid}-${match.params.id}`);
                     }else{
                         await textUrl.set({
                             user1 : user.uid,
-                            user2 : match.params.id
+                            user2 : match.params.id,
+                            users : [user.uid,match.params.id]
                         });
                     }
                 }));
