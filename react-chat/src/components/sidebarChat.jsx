@@ -9,7 +9,9 @@ import ReactLoading from "react-loading";
 export const SidebarChat = ({users}) => {
 
     const [displayUser,setDisplayUser] = useState(null);
+    const [homeUser,sethomeUser] = useState(null);
     const [userPfp,setUserPfp] = useState(null);
+    const [notif,setNotif] = useState(false);
     const [userName,setUserName] = useState(null);
     const [message,setMessage] = useState(null);
     const [user] = useAuthState(auth());
@@ -19,9 +21,11 @@ export const SidebarChat = ({users}) => {
     const setDisplay = async () => {
         if(users.user1 === user.uid){
             setDisplayUser(users.user2);
+            sethomeUser('user1');
         }
         if(users.user2 === user.uid){
             setDisplayUser(users.user1);
+            sethomeUser('user2');
         }
     }
 
@@ -51,8 +55,29 @@ export const SidebarChat = ({users}) => {
 
     }
 
+
+    const getNotifs = () => {
+        if(homeUser === 'user1'){
+            const ref =  db.doc(`private-chats/${users.messageId}`);
+            ref.get().then(async(doc) => {
+                if(doc.data().user1LastView < doc.data().user2LastUpdate){
+                    setNotif(true);
+                }
+                
+            })
+        }else{
+            const ref =  db.doc(`private-chats/${users.messageId}`);
+            ref.get().then(async(doc) => {
+                if(doc.data().user2LastView < doc.data().user1LastUpdate){
+                    setNotif(true);
+                }
+            })
+        }
+    }
+
     useEffect(() => {
-        setDisplay()
+        setDisplay();
+        
     },[]);
 
 
@@ -60,6 +85,10 @@ export const SidebarChat = ({users}) => {
     useEffect(() => {
          getUser();
     },[displayUser]);
+
+    useEffect(() => {
+        getNotifs();
+    },[homeUser])
 
     function refreshPage() {
         window.location.reload(false);
@@ -81,7 +110,7 @@ export const SidebarChat = ({users}) => {
             animate={{y:0}}
             exit={{y:-200}}
             transition={{duration:0.15}}
-            onClick={redirect} className={`rounded-2xl border border-gray-800 p-2 px-4 shadow-2xl w-full  flex justify-center items-center  flex-row primary`}>
+            onClick={redirect} className={`rounded-2xl border ${notif ? 'border-red-800':'border-gray-800'} p-2 px-4 shadow-2xl w-full  flex justify-center items-center  flex-row primary`}>
             {userPfp && userName && message ?
                 <>
                 <div className={`w-[21%] min-w-[4em] h-[100%] flex justify-center items-center `}>

@@ -4,7 +4,7 @@ import {motion} from "framer-motion";
 import {useHistory} from "react-router-dom";
 
 
-const Chat = ({user,text,group,name,index,cons,above,below,avatar}) => {
+const Chat = ({user,text,group,name,index,cons,above,below,avatar,time}) => {
     const [users,load] = useAuthState(firebase.auth());
     const pic = avatar;
     //functions that gets the first word from a string

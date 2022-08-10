@@ -12,6 +12,7 @@ import {Route, useHistory} from "react-router-dom";
 import ReactLoading from "react-loading";
 import holdsvg from './images.jpeg';
 import {uploadBytes} from "firebase/storage";
+import { Timestamp } from "firebase/firestore";
 import {Sidebar} from "./Sidebar";
 import SidebarButton from "./SidebarButton";
 
@@ -172,7 +173,7 @@ const Box = () => {
 
     }
 
-
+    console.log(Timestamp.now());
 
 
     return (
@@ -201,7 +202,8 @@ const Box = () => {
                                           user={chats.user}
                                           name={chats.name}
                                           avatar={chats.avatar}
-                                          text={chats.text}/>
+                                          text={chats.text}
+                                          time={Timestamp.now()-chats.createdAt > 900}/>
                                     </AnimatePresence>
                                 )): <div className={`flex justify-center items-center h-[100%] w-[100%]`}><div>Error</div></div>}
                                 </> : <div className={`w-[100%] h-[100%] absolute flex justify-center items-center `}> <ReactLoading type={'bars'} color={'white'} height={'20%'} width={'20%'} /></div>

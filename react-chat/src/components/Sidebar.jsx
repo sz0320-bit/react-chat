@@ -63,7 +63,6 @@ export const Sidebar = ({onClick,logOut}) => {
 
 
 
-
      return  (
          <>
          <motion.div

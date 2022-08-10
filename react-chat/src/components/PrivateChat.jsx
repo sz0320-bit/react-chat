@@ -101,11 +101,29 @@ export const PrivateBox = ({match}) => {
     }
 
 
+    const setUpdate = () => {
+        chatsRef.get().then(async(snapshot)=>{
+            if(snapshot.data().user1 === user.uid){
+                await snapshot.ref.update({
+                    user1LastView: firebase.firestore.FieldValue.serverTimestamp(),
+                });
+            }else{
+                await snapshot.ref.update({
+                    user2LastView: firebase.firestore.FieldValue.serverTimestamp(),
+                });
+            }
+        })
+    }
 
 
     useEffect( () => {
         authUser();
+        setUpdate();
     },[]);
+
+    useEffect( () => {
+        setUpdate();
+    },[chat]);
 
     useEffect(() => {
         console.log(authInit);
@@ -141,7 +159,19 @@ export const PrivateBox = ({match}) => {
         chatsRef.get().then(async (doc) => {
             await doc.ref.update({
                 lastUpdated: firebase.firestore.FieldValue.serverTimestamp(),
+                
             });
+            if(doc.data().user1 === user.uid){
+                await doc.ref.update({
+                    user1LastUpdate: firebase.firestore.FieldValue.serverTimestamp(),
+                    user1LastView: firebase.firestore.FieldValue.serverTimestamp(),
+                });
+            }else{
+                await doc.ref.update({
+                    user2LastUpdate: firebase.firestore.FieldValue.serverTimestamp(),
+                    user2LastView: firebase.firestore.FieldValue.serverTimestamp(),
+                });
+            }
         });
 
     }
