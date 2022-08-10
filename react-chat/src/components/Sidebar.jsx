@@ -38,7 +38,6 @@ export const Sidebar = ({onClick,logOut}) => {
                            if(snapshot.exists){
                                console.log('found alt')
                                history.push(`/chat/${user.uid}-${username}`);
-                               refreshPage();
                            }else{
                                console.log('creating route')
                                await textUrl.set({
@@ -64,13 +63,14 @@ export const Sidebar = ({onClick,logOut}) => {
 
 
 
+
      return  (
          <>
          <motion.div
-             className={' w-[85%]   lg:w-[25em] md:w-[20em] h-[100%] fixed glass flex flex-col  gap-4 py-4 items-center '}
-             initial={{x:-300}}
+             className={' w-[85%]   lg:w-[25em] md:w-[25em] h-[100%] fixed glass flex flex-col  gap-4 py-4 items-center '}
+             initial={{x:-400}}
              animate={{x:0}}
-             exit={{x:-300}}
+             exit={{x:-400}}
              transition={{
                  duration: 0.3,
                  bounce: 0

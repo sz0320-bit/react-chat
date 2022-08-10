@@ -13,7 +13,7 @@ export const Viewer = () => {
 
 
     const chatsUserRef = db.collection("private-chats")
-        .where("users", "array-contains", auth().currentUser.uid);
+        .where("users", "array-contains", auth().currentUser.uid).orderBy("lastUpdated", "desc");
 
     const displayChats = async () => {
         let ret = [];

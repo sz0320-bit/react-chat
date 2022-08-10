@@ -137,6 +137,13 @@ export const PrivateBox = ({match}) => {
             createdAt: firebase.firestore.FieldValue.serverTimestamp(),
             avatar: avatarHold
         })
+
+        chatsRef.get().then(async (doc) => {
+            await doc.ref.update({
+                lastUpdated: firebase.firestore.FieldValue.serverTimestamp(),
+            });
+        });
+
     }
 
 

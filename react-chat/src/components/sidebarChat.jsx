@@ -2,8 +2,8 @@ import {useEffect, useState} from "react";
 import {useAuthState} from "react-firebase-hooks/auth";
 import {auth, db} from "../firebase.js";
 import {useHistory} from "react-router-dom";
-
-
+import {motion,AnimatePresence} from "framer-motion";
+import ReactLoading from "react-loading";
 
 
 export const SidebarChat = ({users}) => {
@@ -75,14 +75,25 @@ export const SidebarChat = ({users}) => {
     const history = useHistory();
 
     return (
-        <div onClick={redirect} className={`rounded-2xl border border-gray-800 p-2 px-4 shadow-2xl w-full flex justify-center items-center  flex-row primary`}>
-            <div className={`w-[21%] min-w-[4em] h-[100%] flex justify-center items-center `}>
+        <>
+        <motion.div
+            initial={{y:-200}}
+            animate={{y:0}}
+            exit={{y:-200}}
+            transition={{duration:0.15}}
+            onClick={redirect} className={`rounded-2xl border border-gray-800 p-2 px-4 shadow-2xl w-full  flex justify-center items-center  flex-row primary`}>
+            {userPfp && userName && message ?
+                <>
+                <div className={`w-[21%] min-w-[4em] h-[100%] flex justify-center items-center `}>
                 <div style={{backgroundImage:`url(${userPfp})`,backgroundSize:"100% 100%"}} className={`h-[4em] w-[4em] rounded-[5em] `}></div>
             </div>
             <div className={`w-[79%] p-2 flex flex-col  h-[100%]`}>
                 <div className={`font-bold px-1`}>{userName}</div>
                 <div className={` text-gray-400 p-1 rounded-lg `}>{message}</div>
             </div>
-        </div>
+            </>
+            : <ReactLoading type={'spin'} color={'white'} height={'100%'} width={'20%'} />}
+        </motion.div>
+        </>
     )
 }
