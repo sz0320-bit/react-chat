@@ -17,6 +17,7 @@
 }
 body{
     @apply primary  !important;
+
 }
 .no-scrollbar::-webkit-scrollbar {
     display: none;
@@ -54,4 +55,8 @@ body{
 
 .sidebarOutline:last-child{
     justify-content: end;
+}
+
+.example::-webkit-scrollbar {
+    display: none;
 }

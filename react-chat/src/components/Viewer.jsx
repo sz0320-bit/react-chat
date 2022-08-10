@@ -42,7 +42,7 @@ export const Viewer = () => {
 
     return (
 
-        <div className={` h-full  rounded-xl flex flex-col   p-3    items-center gap-2 overflow-scroll w-[100%]`}>
+        <div className={` h-full  rounded-xl flex flex-col   p-3  example  items-center gap-2 overflow-scroll w-[100%]`}>
             {!Load && loadChat.map((item,index) => {
                 return (
                 <SidebarChat key={index} users={item}/>
