@@ -103,7 +103,11 @@ export const ProfilePage= ({match}) => {
                     <div className={"h-fit p-8  w-screen flex justify-center items-center  gap-5 flex-col"}>
                         <div style={{backgroundImage:`url(${avatar})`,backgroundSize:'contain'}} className={'h-[12em] rounded-[6em] w-[12em] border'}></div>
                         <div className={`text-[1.75em]`}>{name}</div>
-                        <input type={"button"} value={'TEXT'} onClick={textReroute} className={`shadow-2xl font-mono  top-[9em] h-fit w-[50%] py-2 bg-blue-700  rounded-xl`}/>
+                        <input type={"button"} value={'TEXT'} onClick={textReroute} className={`shadow-2xl font-mono max-w-[15em] top-[9em] h-fit w-[50%] py-2 bg-blue-700  rounded-xl`}/>
+                        <div className={`flex justify-center gap-2 rounded-2xl flex-col items-center  p-2`}>
+                            <div className={'font-mono '}>UserID:</div>
+                            <div className={`text-md border p-2 rounded-2xl`}>{match.params.id}</div>
+                        </div>
                     </div>
                 </div>
                 <AnimatePresence>{showSidebar && <Sidebar logOut={logOut} onClick={() => setShowSidebar(!showSidebar)}/>}</AnimatePresence>

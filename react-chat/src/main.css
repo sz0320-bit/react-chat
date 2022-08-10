@@ -11,6 +11,7 @@
     transition-duration: 200ms;
 }
 
+
 *{
     @apply text-white;
 }
@@ -45,4 +46,12 @@ body{
     -moz-hyphens: auto;
     -ms-hyphens: auto;
     hyphens: auto;
+}
+
+.sidebarOutline:first-child{
+    justify-content: start;
+}
+
+.sidebarOutline:last-child{
+    justify-content: end;
 }
