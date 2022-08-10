@@ -59,7 +59,7 @@ export const SidebarChat = ({users}) => {
     const getNotifs = () => {
         if(homeUser === 'user1'){
             const ref =  db.doc(`private-chats/${users.messageId}`);
-            ref.get().then(async(doc) => {
+            ref.onSnapshot(async(doc) => {
                 if(doc.data().user1LastView < doc.data().user2LastUpdate){
                     setNotif(true);
                 }
@@ -67,7 +67,7 @@ export const SidebarChat = ({users}) => {
             })
         }else{
             const ref =  db.doc(`private-chats/${users.messageId}`);
-            ref.get().then(async(doc) => {
+            ref.onSnapshot(async(doc) => {
                 if(doc.data().user2LastView < doc.data().user1LastUpdate){
                     setNotif(true);
                 }
@@ -110,11 +110,11 @@ export const SidebarChat = ({users}) => {
             animate={{y:0}}
             exit={{y:-200}}
             transition={{duration:0.15}}
-            onClick={redirect} className={`rounded-2xl border ${notif ? 'border-red-800':'border-gray-800'} p-2 px-4 shadow-2xl w-full  flex justify-center items-center  flex-row primary`}>
+            onClick={redirect} className={`rounded-2xl border-2  ${notif && users.user1 !== users.user2 ? 'border-r-red-800 border-r-8 border-gray-800':'border-gray-800'} p-2 px-4 shadow-2xl w-full  flex justify-center items-center  flex-row bg-[#202020]`}>
             {userPfp && userName && message ?
                 <>
                 <div className={`w-[21%] min-w-[4em] h-[100%] flex justify-center items-center `}>
-                <div style={{backgroundImage:`url(${userPfp})`,backgroundSize:"100% 100%"}} className={`h-[4em] w-[4em] rounded-[5em] `}></div>
+                <div  style={{backgroundImage:`url(${userPfp})`,backgroundSize:"100% 100%"}} className={`h-[4em] border w-[4em] rounded-[5em] `}></div>
             </div>
             <div className={`w-[79%] p-2 flex flex-col  h-[100%]`}>
                 <div className={`font-bold px-1`}>{userName}</div>

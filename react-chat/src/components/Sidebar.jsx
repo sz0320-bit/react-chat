@@ -66,7 +66,7 @@ export const Sidebar = ({onClick,logOut}) => {
      return  (
          <>
          <motion.div
-             className={' w-[85%]   lg:w-[25em] md:w-[25em] h-[100%] fixed glass flex flex-col  gap-4 py-4 items-center '}
+             className={' w-[85%]   lg:w-[25em] md:w-[25em] h-[100%] fixed lightglass flex flex-col  gap-4 py-4 items-center '}
              initial={{x:-400}}
              animate={{x:0}}
              exit={{x:-400}}
