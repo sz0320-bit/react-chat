@@ -16,8 +16,9 @@ export const Viewer = () => {
         .where("users", "array-contains", auth().currentUser.uid).orderBy("lastUpdated", "desc");
 
     const displayChats = async () => {
-        let ret = [];
+
         await chatsUserRef.onSnapshot(async (snapshot) => {
+            let ret = [];
            snapshot.forEach( (doc1) => {
                 let hold = doc1.data();
                 let objId = {messageId:doc1.id};

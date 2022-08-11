@@ -116,14 +116,16 @@ export const PrivateBox = ({match}) => {
     }
 
 
+    //javascript function that does something every 4 seconds
+
+
+
     useEffect( () => {
         authUser();
         setUpdate();
     },[]);
 
-    useEffect( () => {
-        setUpdate();
-    },[chat]);
+
 
     useEffect(() => {
         console.log(authInit);
@@ -132,6 +134,8 @@ export const PrivateBox = ({match}) => {
 
     useEffect(() => {
         {bottomRef.current !== null ? bottomRef.current.scrollIntoView({behavior: "smooth"}) : null}
+        setUpdate();
+        console.log('update');
     },[chat]);
 
 

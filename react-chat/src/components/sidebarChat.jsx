@@ -62,6 +62,13 @@ export const SidebarChat = ({users}) => {
             ref.onSnapshot(async(doc) => {
                 if(doc.data().user1LastView < doc.data().user2LastUpdate){
                     setNotif(true);
+                    console.log('ult 1')
+                }else if(doc.data().user1LastView >= doc.data().user2LastUpdate){
+                    setNotif(false);
+                    console.log('ult 2')
+                }else{
+                    setNotif(false);
+                    console.log('ult 3')
                 }
                 
             })
@@ -71,13 +78,18 @@ export const SidebarChat = ({users}) => {
                 if(doc.data().user2LastView < doc.data().user1LastUpdate){
                     setNotif(true);
                 }
+                else if(doc.data().user2LastView >= doc.data().user1LastUpdate){
+                    setNotif(false);
+                }else{
+                    setNotif(false);
+                }
             })
         }
     }
 
     useEffect(() => {
         setDisplay();
-        
+        getNotifs();
     },[]);
 
 
@@ -110,7 +122,7 @@ export const SidebarChat = ({users}) => {
             animate={{y:0}}
             exit={{y:-200}}
             transition={{duration:0.15}}
-            onClick={redirect} className={`rounded-2xl border-2  ${notif && users.user1 !== users.user2 ? 'border-r-red-800 border-r-8 border-gray-800':'border-gray-800'} p-2 px-4 shadow-2xl w-full  flex justify-center items-center  flex-row bg-[#202020]`}>
+            onClick={redirect} className={`rounded-2xl border-2  ${notif && users.user1 !== users.user2 ? 'border-r-red-800 border-r-8 border-gray-800':'border-gray-800'} p-2 px-4 shadow-2xl w-full  flex justify-center items-center  flex-row primary`}>
             {userPfp && userName && message ?
                 <>
                 <div className={`w-[21%] min-w-[4em] h-[100%] flex justify-center items-center `}>

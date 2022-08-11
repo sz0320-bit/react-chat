@@ -173,7 +173,7 @@ const Box = () => {
 
     }
 
-    console.log(Timestamp.now());
+
 
 
     return (
