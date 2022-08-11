@@ -59,26 +59,24 @@ export const SidebarChat = ({users}) => {
     const getNotifs = () => {
         if(homeUser === 'user1'){
             const ref =  db.doc(`private-chats/${users.messageId}`);
+
             ref.onSnapshot(async(doc) => {
-                if(doc.data().user1LastView < doc.data().user2LastUpdate){
+                if(doc.data().user1LastView.seconds < doc.data().user2LastUpdate.seconds){
                     setNotif(true);
-                    console.log('ult 1')
-                }else if(doc.data().user1LastView >= doc.data().user2LastUpdate){
+                }else if(doc.data().user1LastView.seconds > doc.data().user2LastUpdate.seconds){
                     setNotif(false);
-                    console.log('ult 2')
                 }else{
                     setNotif(false);
-                    console.log('ult 3')
                 }
                 
             })
         }else{
             const ref =  db.doc(`private-chats/${users.messageId}`);
             ref.onSnapshot(async(doc) => {
-                if(doc.data().user2LastView < doc.data().user1LastUpdate){
+                if(doc.data().user2LastView.seconds < doc.data().user1LastUpdate.seconds){
                     setNotif(true);
                 }
-                else if(doc.data().user2LastView >= doc.data().user1LastUpdate){
+                else if(doc.data().user2LastView.seconds > doc.data().user1LastUpdate.seconds){
                     setNotif(false);
                 }else{
                     setNotif(false);

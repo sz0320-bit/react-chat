@@ -168,12 +168,11 @@ export const PrivateBox = ({match}) => {
             if(doc.data().user1 === user.uid){
                 await doc.ref.update({
                     user1LastUpdate: firebase.firestore.FieldValue.serverTimestamp(),
-                    user1LastView: firebase.firestore.FieldValue.serverTimestamp(),
+
                 });
             }else{
                 await doc.ref.update({
                     user2LastUpdate: firebase.firestore.FieldValue.serverTimestamp(),
-                    user2LastView: firebase.firestore.FieldValue.serverTimestamp(),
                 });
             }
         });
