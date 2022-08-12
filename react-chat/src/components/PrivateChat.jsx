@@ -4,7 +4,7 @@ import Type from "./Type.jsx";
 import {Enter} from "./Enter.jsx";
 import {useAuthState} from "react-firebase-hooks/auth";
 import firebase from "../firebase";
-import {BiLogOut,MdOutlineReadMore} from "react-icons/all.js";
+import {BiLogOut, BsInfoCircle, MdOutlineReadMore} from "react-icons/all.js";
 import {db,auth} from "../firebase";
 import {AnimatePresence, motion} from "framer-motion";
 import { query, orderBy, limit } from "firebase/firestore";
@@ -23,6 +23,7 @@ export const PrivateBox = ({match}) => {
     const [chat,setChat] = useState(null);
     const [loading,setLoading] = useState(true);
     const [authLoad,setAuthLoad] = useState(true);
+    const [displayUser,setDisplayUser] = useState(null);
     const chatsRef = db.doc(`private-chats/${match.params.id}`);
     const mainRef = db.collection(`private-chats/${match.params.id}/messages`);
     const bottomRef = useRef(null);
@@ -61,6 +62,7 @@ export const PrivateBox = ({match}) => {
            if(dataHold.user1 === user.uid || dataHold.user2 === user.uid){
                setAuth(true);
                 setAuthLoad(false);
+               setDisplayUser(dataHold.user1 === user.uid ? dataHold.user2 : dataHold.user1);
                getData();
                getUser();
            }else{
@@ -92,6 +94,32 @@ export const PrivateBox = ({match}) => {
                         name:user.displayName,
                         email:user.email,
                     });
+                }
+            }));
+        }catch (e) {
+            console.log(e);
+        }
+
+    }
+
+    const [displayName,setDisplayName] = useState(null);
+    const [displayAvatar,setDisplayAvatar] = useState(null);
+
+    useEffect(() => {
+        getOtherUser();
+    },[displayUser]);
+
+
+    const getOtherUser = async () => {
+        const oppFetch = db.collection("users").doc(`${displayUser}`);
+        try {
+
+            oppFetch.onSnapshot((async (snapshot) => {
+                if(snapshot.exists){
+                    setDisplayName(snapshot.data().name);
+                    setDisplayAvatar(snapshot.data().profilePic);
+                }else{
+                    console.log("no data");
                 }
             }));
         }catch (e) {
@@ -256,9 +284,22 @@ export const PrivateBox = ({match}) => {
             animate={{opacity:1}}
             exit={{opacity:0}}
             transition={{duration:0.2}}>
+            <div className={`flex flex-col absolute h-[92.5%]  w-full`}>
+            <div className={`border-b-2 flex px-3 py-2 gap-2 lg:gap-5 rounded-b-[1.5em] items-center h-fit w-full`}>
+                <div className={` w-fit ml-1 flex justify-center items-center`}>
+                    <SidebarButton onClick={() => setShow(true)}/>
+                </div>
+                <div className={`w-full flex  items-center px-2 gap-2 h-full`}>
+                    <div style={{backgroundImage:`url(${displayAvatar})`,backgroundSize:"100% 100%"}} className={`h-12 w-12 rounded-[5em] border`}></div>
+                    <div className={`text-lg font-bold`}>{displayName}</div>
+                </div>
+                <div className={` w-fit mr-1 flex justify-center items-center`} onClick={() => history.push(`/profile/${displayUser}`)}>
+                    <BsInfoCircle className={`text-[1.5em] lg:text-[2em]`} />
+                </div>
+            </div>
             <div
-                className={` w-screen overflow-scroll  no-scrollbar overflow-x-hidden h-[92.5%]  absolute  flex justify-start flex-col py-5 `}>
-                <SidebarButton onClick={() => setShow(true)}/>
+                className={` w-screen overflow-scroll  no-scrollbar overflow-x-hidden h-[91%]     flex justify-start flex-col py-5 `}>
+
                 {!loading ?
                     <>
                         { chat !== null ? chat.map((chats, index) => (
@@ -277,8 +318,8 @@ export const PrivateBox = ({match}) => {
                             </AnimatePresence>
                         )): <div className={`flex justify-center items-center h-[100%] w-[100%]`}><div>Error</div></div>}
                     </> : <div className={`w-[100%] h-[100%] absolute flex justify-center items-center `}> <ReactLoading type={'bars'} color={'white'} height={'20%'} width={'20%'} /></div>
-                }
-                <div ref={bottomRef}/>
+                }<div ref={bottomRef}/></div>
+
             </div>
 
             <Type onSubmit={addChat}/>

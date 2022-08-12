@@ -4,13 +4,14 @@ import {auth, db} from "../firebase.js";
 import {useHistory} from "react-router-dom";
 import {motion,AnimatePresence} from "framer-motion";
 import ReactLoading from "react-loading";
+import ProfileAlt from "../assets/profileAlt.webp";
 
 
 export const SidebarChat = ({users}) => {
 
     const [displayUser,setDisplayUser] = useState(null);
     const [homeUser,sethomeUser] = useState(null);
-    const [userPfp,setUserPfp] = useState(null);
+    const [userPfp,setUserPfp] = useState(ProfileAlt);
     const [notif,setNotif] = useState(false);
     const [userName,setUserName] = useState(null);
     const [message,setMessage] = useState(null);

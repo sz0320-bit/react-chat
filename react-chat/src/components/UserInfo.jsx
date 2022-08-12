@@ -95,7 +95,7 @@ export const UserInfo= () => {
             transition={{duration:0.2}}>
 
             <div className={`absolute`}>
-                <SidebarButton onClick={() => setShowSidebar(true)}/>
+                <div className={`fixed top-5 left-5`}><SidebarButton onClick={() => setShowSidebar(true)}/></div>
                 <div className={"h-fit p-8  w-screen flex justify-center items-center  gap-5 flex-col"}>
 
                     <div style={{backgroundImage:`url(${avatar})`,backgroundSize:'contain'}} className={'h-[12em] rounded-[6em] w-[12em] border'}></div>

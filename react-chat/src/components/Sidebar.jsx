@@ -78,13 +78,13 @@ export const Sidebar = ({onClick,logOut}) => {
                  <MdOutlineReadMore color="black"  className="text-2xl fill-black lg:text-3xl rotate "/>
              </button>
              <div className={`flex flex-row  w-[90%] h-fit   items-center justify-center`}>
-                <div onClick={() => history.push("/main")} className={`shadow-2xl font-mono flex justify-center items-center h-fit w-[90%] py-2 bg-blue-700 rounded-l-xl`}>
+                <div onClick={() => history.push("/main")} className={`shadow-2xl border font-mono flex justify-center items-center h-fit border-r-0 w-[90%] py-2 bg-blue-800 rounded-l-xl`}>
                     <AiFillHome color="white" className="text-2xl fill-white lg:text-3xl "/>
                 </div>
-                 <div onClick={() => history.push("/user")} className={`shadow-2xl font-mono flex justify-center items-center h-fit w-[90%] py-2 bg-sky-600 `}>
-                     <FaUserEdit color="white" className="text-2xl fill-white lg:text-3xl "/>
+                 <div onClick={() => history.push("/user")} className={`shadow-2xl border font-mono flex justify-center items-center border-l-0 border-r-0 h-fit w-[90%] py-2 bg-sky-700 `}>
+                     <FaUserEdit color="white" className="text-2xl  fill-white lg:text-3xl "/>
                  </div>
-                 <div onClick={() => setShow(true)} className={`shadow-2xl font-mono flex justify-center items-center h-fit w-[90%] py-2 bg-green-600 rounded-r-xl`}>
+                 <div onClick={() => setShow(true)} className={`shadow-2xl font-mono border flex justify-center items-center h-fit w-[90%] border-l-0 py-2 bg-green-600 rounded-r-xl`}>
                      <BiMessageAdd color="white" className="text-2xl fill-white lg:text-3xl "/>
                  </div>
              </div>

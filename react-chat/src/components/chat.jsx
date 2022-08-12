@@ -3,11 +3,12 @@ import {useAuthState} from "react-firebase-hooks/auth";
 import {motion} from "framer-motion";
 import {useHistory} from "react-router-dom";
 import {useEffect, useState} from "react";
+import ProfileAlt from "../assets/profileAlt.webp";
 
 
 const Chat = ({user,text,group,name,index,cons,above,below,time}) => {
     const [users,load] = useAuthState(firebase.auth());
-    const [avatar,setAvatar] = useState(null);
+    const [avatar,setAvatar] = useState(ProfileAlt);
     const pic = avatar;
     //functions that gets the first word from a string
     const getFirstWord = (str) => {
@@ -18,6 +19,8 @@ const Chat = ({user,text,group,name,index,cons,above,below,time}) => {
         //remove the \n at the start and end of the string
         return  str.trim();
     }
+
+    const history = useHistory();
 
     const getAvatar = async () => {
 
@@ -60,7 +63,7 @@ const Chat = ({user,text,group,name,index,cons,above,below,time}) => {
                 }
             </div> : null}
             <div className={'w-max max-w-[75%] break-all'}>
-                {user !== users.uid && !group ? <div className={'absolute mt-[-1.1rem] ml-3 text-[0.75rem] text-gray-300'}>{getFirstWord(name)}</div> : null}
+                {user !== users.uid && !group ? <div className={' mt-[-1.1rem] ml-3 text-[0.75rem] text-gray-300'}>{getFirstWord(name)}</div> : null}
             <div className={`w-fit nohyph  break-normal whitespace-pre-wrap  h-fit py-1.5 ${above && user ===users.uid && 'rounded-tr-[5px]'} ${below && user ===users.uid && 'rounded-br-[5px]'} ${above && user !==  users.uid && 'rounded-tl-[5px]'} ${below && user !==  users.uid && 'rounded-bl-[5px]'}  px-5  flex flex-row justify-center items-center ${user ===  users.uid ? "bg-blue-600":"bg-gray-700 "} rounded-3xl  `}>
                 {
                     cleanText(text).split('\n\n').map((line, i) => (
