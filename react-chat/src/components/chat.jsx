@@ -1,11 +1,13 @@
-import firebase, {auth} from "../firebase.js";
+import firebase, {auth, db} from "../firebase.js";
 import {useAuthState} from "react-firebase-hooks/auth";
 import {motion} from "framer-motion";
 import {useHistory} from "react-router-dom";
+import {useEffect, useState} from "react";
 
 
-const Chat = ({user,text,group,name,index,cons,above,below,avatar,time}) => {
+const Chat = ({user,text,group,name,index,cons,above,below,time}) => {
     const [users,load] = useAuthState(firebase.auth());
+    const [avatar,setAvatar] = useState(null);
     const pic = avatar;
     //functions that gets the first word from a string
     const getFirstWord = (str) => {
@@ -17,8 +19,28 @@ const Chat = ({user,text,group,name,index,cons,above,below,avatar,time}) => {
         return  str.trim();
     }
 
-    const history = useHistory();
+    const getAvatar = async () => {
 
+        try {
+            const userFetch = db.collection("users").doc(`${user}`);
+
+
+            userFetch.onSnapshot((async (snapshot) => {
+                if(snapshot.exists){
+                    setAvatar(snapshot.data().profilePic);
+                }else{
+                    console.log("no data");
+                }
+            }));
+        }catch (e) {
+            console.log(e);
+        }
+
+    }
+
+    useEffect(() => {
+        getAvatar();
+    },[]);
 
 /*<div className={`absolute mt-[-1.75em] text-[15px] text-gray-300 ${group ? 'invisible':''}`}>{getFirstWord(name)}</div>
 * this is if i want to show the first name of the user

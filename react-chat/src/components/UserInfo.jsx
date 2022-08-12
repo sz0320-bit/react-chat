@@ -68,9 +68,10 @@ export const UserInfo= () => {
 
     const updateImage = async (img) => {
         const fileRef = firebase.storage().ref(`userPics/${users.uid}`);
+        const uploadedRef = firebase.storage().ref(`userPics/${users.uid}_200x200`);
         uploadBytes(fileRef,img).then(async (snapshot) => {
             console.log('uploaded');
-            getDownloadURL(snapshot.ref).then( url => {
+            getDownloadURL(uploadedRef).then( url => {
                 userFetch.update({
                     profilePic:url
                 });

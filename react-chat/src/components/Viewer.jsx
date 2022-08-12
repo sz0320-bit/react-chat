@@ -1,9 +1,10 @@
-import {db,auth} from "../firebase.js";
+import firebase, {db,auth} from "../firebase.js";
 import {useEffect} from "react";
 import {useState} from "react";
 import { getFirestore, doc, setDoc,updateDoc } from "firebase/firestore";
 import {useAuthState} from "react-firebase-hooks/auth";
 import {SidebarChat} from "./sidebarChat";
+import {getDownloadURL, uploadBytes, getBlob} from "firebase/storage";
 
 export const Viewer = () => {
     const [loadChat,setLoadChat] = useState([]);
@@ -30,6 +31,10 @@ export const Viewer = () => {
         });
 
     }
+
+
+
+
 
 
 
