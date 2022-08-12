@@ -58,31 +58,41 @@ export const SidebarChat = ({users}) => {
 
 
     const getNotifs = () => {
+        try{
         if(homeUser === 'user1'){
             const ref =  db.doc(`private-chats/${users.messageId}`);
 
             ref.onSnapshot(async(doc) => {
-                if(doc.data().user1LastView.seconds < doc.data().user2LastUpdate.seconds){
-                    setNotif(true);
-                }else if(doc.data().user1LastView.seconds > doc.data().user2LastUpdate.seconds){
-                    setNotif(false);
-                }else{
-                    setNotif(false);
+                try {
+                    if (doc.data().user1LastView.seconds < doc.data().user2LastUpdate.seconds) {
+                        setNotif(true);
+                    } else if (doc.data().user1LastView.seconds > doc.data().user2LastUpdate.seconds) {
+                        setNotif(false);
+                    } else {
+                        setNotif(false);
+                    }
+                }catch (e) {
+                    console.log(e);
                 }
-                
             })
         }else{
             const ref =  db.doc(`private-chats/${users.messageId}`);
             ref.onSnapshot(async(doc) => {
-                if(doc.data().user2LastView.seconds < doc.data().user1LastUpdate.seconds){
-                    setNotif(true);
-                }
-                else if(doc.data().user2LastView.seconds > doc.data().user1LastUpdate.seconds){
-                    setNotif(false);
-                }else{
-                    setNotif(false);
+                try {
+                    if (doc.data().user2LastView.seconds < doc.data().user1LastUpdate.seconds) {
+                        setNotif(true);
+                    } else if (doc.data().user2LastView.seconds > doc.data().user1LastUpdate.seconds) {
+                        setNotif(false);
+                    } else {
+                        setNotif(false);
+                    }
+                }catch (e) {
+                    console.log(e);
                 }
             })
+        }
+        }catch(e){
+
         }
     }
 

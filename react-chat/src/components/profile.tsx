@@ -61,6 +61,9 @@ export const ProfilePage= ({match}) => {
 
     }
 
+
+
+
     const textReroute = async () => {
         await textUrl.onSnapshot((async (snapshot) => {
             if(snapshot.exists){
@@ -74,7 +77,8 @@ export const ProfilePage= ({match}) => {
                         await textUrl.set({
                             user1 : user.uid,
                             user2 : match.params.id,
-                            users : [user.uid,match.params.id]
+                            users : [user.uid,match.params.id],
+                            firstRender : true
                         });
                     }
                 }));
@@ -101,7 +105,7 @@ export const ProfilePage= ({match}) => {
                 <div className={`absolute`}>
                     <div className={`fixed top-5 left-5`}><SidebarButton onClick={() => setShowSidebar(true)}/></div>
                     <div className={"h-fit p-8  w-screen flex justify-center items-center  gap-5 flex-col"}>
-                        <div style={{backgroundImage:`url(${avatar})`,backgroundSize:'contain'}} className={'h-[12em] rounded-[6em] w-[12em] border'}></div>
+                        <div style={{backgroundImage:`url(${avatar})`,backgroundSize:'100% 100%'}} className={'h-[12em] rounded-[6em] w-[12em] border'}></div>
                         <div className={`text-[1.75em]`}>{name}</div>
                         <input type={"button"} value={'TEXT'} onClick={textReroute} className={`shadow-2xl font-mono max-w-[15em] top-[9em] h-fit w-[50%] py-2 bg-blue-700  rounded-xl`}/>
                         <div className={`flex justify-center gap-2 rounded-2xl flex-col items-center  p-2`}>

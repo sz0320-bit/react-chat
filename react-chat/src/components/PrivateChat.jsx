@@ -52,6 +52,23 @@ export const PrivateBox = ({match}) => {
 
     }
 
+    function refreshPage() {
+        window.location.reload(false);
+    }
+
+    const firstRenderCheck = () => {
+        chatsRef.get().then(async doc => {
+           console.log(doc.data());
+           if(doc.data().firstRender === true){
+               console.log('confirmed');
+               await doc.ref.update({firstRender: false});
+               refreshPage();
+           }else{
+               console.log('not confirmed');
+           }
+        });
+    }
+
     const [authInit,setAuth] = useState(null);
 
 
@@ -149,6 +166,7 @@ export const PrivateBox = ({match}) => {
 
 
     useEffect( () => {
+        firstRenderCheck();
         authUser();
         setUpdate();
     },[]);
