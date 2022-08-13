@@ -62,9 +62,9 @@ const Chat = ({user,text,group,name,index,cons,above,below,time}) => {
                     <div onClick={() => history.push(`/profile/${user}`)}  className={`w-8 rounded-[5em] flex justify-center items-center h-7 border  ${group ? 'invisible':''}`}>{name[0].toUpperCase()}</div>
                 }
             </div> : null}
-            <div className={'w-max max-w-[75%] break-all'}>
+            <div className={'w-max  max-w-[75%] break-all'}>
                 {user !== users.uid && !group ? <div className={' mt-[-1.1rem] ml-3 text-[0.75rem] text-gray-300'}>{getFirstWord(name)}</div> : null}
-            <div className={`w-fit nohyph  break-normal whitespace-pre-wrap  h-fit py-1.5 ${above && user ===users.uid && 'rounded-tr-[5px]'} ${below && user ===users.uid && 'rounded-br-[5px]'} ${above && user !==  users.uid && 'rounded-tl-[5px]'} ${below && user !==  users.uid && 'rounded-bl-[5px]'}  px-5  flex flex-row justify-center items-center ${user ===  users.uid ? "bg-blue-600":"bg-gray-700 "} rounded-3xl  `}>
+            <div className={`w-full   breakNormal whitespace-pre-wrap  h-fit py-1.5 ${above && user ===users.uid && 'rounded-tr-[5px]'} ${below && user ===users.uid && 'rounded-br-[5px]'} ${above && user !==  users.uid && 'rounded-tl-[5px]'} ${below && user !==  users.uid && 'rounded-bl-[5px]'}  px-5  flex flex-row justify-center items-center ${user ===  users.uid ? "bg-blue-600":"bg-gray-700 "} rounded-3xl  `}>
                 {
                     cleanText(text).split('\n\n').map((line, i) => (
                         <>

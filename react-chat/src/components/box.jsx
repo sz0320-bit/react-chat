@@ -192,7 +192,7 @@ const Box = () => {
                     </div>
                     <div className={`w-full flex justify-center items-center px-2 gap-2 h-full`}>
                         <div style={{backgroundImage:`url(${reactSvg})`,backgroundSize:"80% 80%",backgroundRepeat:"no-repeat", backgroundPosition:"center"}} className={`h-12 w-12 rounded-[5em] border`}></div>
-                        <div className={`text-lg font-bold`}>Main Chat</div>
+                        <div className={`text-lg font-mono font-bold`}>Main Chat</div>
                     </div>
                     <div className={` w-fit mr-1 flex justify-center items-center`}>
                         <BsInfoCircle className={`text-[1.5em] invisible lg:text-[2em]`} />

@@ -40,8 +40,11 @@ body{
 
 .widthadjust{
     width: calc(100% - 80px);
+    max-width: calc(100% - 80px);
 }
-
+.breakNormal{
+   word-break: break-word;
+}
 .nohyph{
     -webkit-hyphens: auto;
     -moz-hyphens: auto;
