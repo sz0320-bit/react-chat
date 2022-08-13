@@ -60,3 +60,9 @@ body{
 .example::-webkit-scrollbar {
     display: none;
 }
+.messageHolder{
+    overflow:hidden;
+    display:inline-block;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}

@@ -131,15 +131,15 @@ export const SidebarChat = ({users}) => {
             animate={{y:0}}
             exit={{y:-200}}
             transition={{duration:0.15}}
-            onClick={redirect} className={`rounded-2xl border-2  ${notif && users.user1 !== users.user2 ? 'border-r-red-800 border-r-8 border-gray-800':'border-gray-800'} p-2 px-4 shadow-2xl w-full  flex justify-center items-center  flex-row primary`}>
+            onClick={redirect} className={`rounded-2xl border-2  ${notif && users.user1 !== users.user2 ? 'border-r-red-800 border-r-8 border-gray-800':'border-gray-800'} p-2 px-3 shadow-2xl w-full max-h-[5em]  flex justify-center items-center  flex-row primary`}>
             {userPfp && userName && message ?
                 <>
                 <div className={`w-[21%] min-w-[4em] h-[100%] flex justify-center items-center `}>
-                <div  style={{backgroundImage:`url(${userPfp})`,backgroundSize:"100% 100%"}} className={`h-[4em] border w-[4em] rounded-[5em] `}></div>
+                <div  style={{backgroundImage:`url(${userPfp})`,backgroundSize:"100% 100%"}} className={`h-[3.5em] border w-[3.5em] rounded-[5em] `}></div>
             </div>
-            <div className={`w-[79%] p-2 flex flex-col  h-[100%]`}>
+            <div className={`w-[79%] p-0.5 flex flex-col   h-[100%]`}>
                 <div className={`font-bold px-1`}>{userName}</div>
-                <div className={` text-gray-400 p-1 rounded-lg `}>{message}</div>
+                <div className={` text-gray-400 p-1 rounded-lg messageHolder w-full`}>{message}</div>
             </div>
             </>
             : <ReactLoading type={'spin'} color={'white'} height={'100%'} width={'20%'} />}
