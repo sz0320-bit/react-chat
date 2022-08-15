@@ -34,10 +34,10 @@ const Type = ({onSubmit}) => {
 
     return (
         <>
-            <form onSubmit={submitTask} name={'main-form'} className={`w-full h-fit   py-3  primary rounded-xl bg-black-500 h-min-[7.4%]  absolute bottom-0 flex  items-center`}>
+            <form onSubmit={submitTask} name={'main-form'} className={`w-full h-fit   py-3   rounded-xl bg-black-500 h-min-[7.4%]  absolute bottom-0 flex  items-center`}>
                 <motion.div
                     transition={{duration: 0.3}}
-                    className={'w-full max-w-full mx-3 h-fit p-1.5 primary min-h-[2.75em] border flex items-center rounded-3xl'}>
+                    className={'w-full max-w-full mx-3 h-fit p-1.5 primary min-h-[2.75em] border border-gray-700 dark:border-white flex items-center rounded-3xl'}>
 
                 <motion.div
                     transition={{duration: 0.3}}
@@ -56,7 +56,7 @@ const Type = ({onSubmit}) => {
                         exit={{opacity:0}}
                         transition={{duration:0.15}}
                         onClick={(e) => submitTask(e)}
-                        className={`w-20   h-fit py-0.5 border-blue-600 border flex justify-center items-center rounded-3xl bg-blue-600`}>
+                        className={`w-20 text-white  h-fit py-0.5 border-blue-600 border flex justify-center items-center rounded-3xl bg-blue-600`}>
                             send
                         </motion.div>
 

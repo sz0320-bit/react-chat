@@ -186,20 +186,20 @@ const Box = () => {
             exit={{opacity:0}}
             transition={{duration:0.2}}>
             <div className={`flex flex-col  absolute h-[92.5%]  w-full`}>
-                <div className={`border-b-2 flex px-3 py-1  gap-2 lg:gap-5 rounded-b-[1.5em] items-center h-fit w-full`}>
+                <div className={`border-b-2 border-gray-700 dark:border-white shadow-2xl  flex px-3 py-1  gap-2 lg:gap-5 rounded-b-[1.5em] items-center h-fit w-full`}>
                     <div className={` w-fit ml-1 flex justify-center items-center`}>
                         <SidebarButton onClick={() => setShow(true)}/>
                     </div>
-                    <div className={`w-full flex justify-center items-center px-2 gap-2 h-full`}>
-                        <div style={{backgroundImage:`url(${reactSvg})`,backgroundSize:"80% 80%",backgroundRepeat:"no-repeat", backgroundPosition:"center"}} className={`h-12 w-12 rounded-[5em] border`}></div>
-                        <div className={`text-lg font-mono font-bold`}>Main Chat</div>
+                    <div className={`w-full flex justify-center items-center px-2 gap-0.5 h-full`}>
+                        <div style={{backgroundImage:`url(${reactSvg})`,backgroundSize:"80% 80%",backgroundRepeat:"no-repeat", backgroundPosition:"center"}} className={`h-12 w-12 rounded-[5em] `}></div>
+                        <div className={`text-lg font-extrabold`}>Main Chat</div>
                     </div>
                     <div className={` w-fit mr-1 flex justify-center items-center`}>
                         <BsInfoCircle className={`text-[1.5em] invisible lg:text-[2em]`} />
                     </div>
                 </div>
                 <div
-                    className={` w-screen overflow-scroll  no-scrollbar overflow-x-hidden h-[91%]     flex justify-start flex-col py-5 `}>
+                    className={` w-screen overflow-scroll  no-scrollbar overflow-x-hidden h-[91%]     flex justify-start flex-col py-5 mb-3`}>
 
                     {!loading ?
                         <>

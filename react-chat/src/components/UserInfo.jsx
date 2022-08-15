@@ -100,10 +100,10 @@ export const UserInfo= () => {
 
                     <div style={{backgroundImage:`url(${avatar})`,backgroundSize:'100% 100%'}} className={'h-[12em] rounded-[6em] w-[12em] border'}></div>
                     <div className={`text-[1.75em]`}>{name}</div>
-                    <input type={"button"} value={'EDIT'} onClick={() => setShow(!show)} className={`shadow-2xl font-mono max-w-[15em] top-[9em] h-fit w-[50%] py-2 bg-blue-700  rounded-xl`}/>
+                    <input type={"button"} value={'EDIT'} onClick={() => setShow(!show)} className={`shadow-2xl font-mono text-white max-w-[15em] top-[9em] h-fit w-[50%] py-2 bg-blue-700  rounded-xl`}/>
                     <div className={`flex justify-center gap-2 rounded-2xl flex-col items-center  p-2`}>
                         <div className={'font-mono '}>UserID:</div>
-                        <div className={`text-md border p-2 rounded-2xl`}>{users.uid}</div>
+                        <div className={`text-md border primary shadow-2xl p-2 rounded-2xl`}>{users.uid}</div>
                     </div>
                 </div>
             </div>

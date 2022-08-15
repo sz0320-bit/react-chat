@@ -8,6 +8,7 @@ import SidebarButton from "./SidebarButton";
 import {Viewer} from "./Viewer";
 import {DisplayImg} from "./displayImg.jsx";
 import {useAuthState} from "react-firebase-hooks/auth";
+import ViewMode from "./ViewMode";
 
 
 export const Sidebar = ({onClick,logOut}) => {
@@ -66,7 +67,7 @@ export const Sidebar = ({onClick,logOut}) => {
      return  (
          <>
          <motion.div
-             className={' w-[85%]   lg:w-[25em] md:w-[25em] h-[100%] fixed glass flex flex-col  gap-4 py-4 items-center '}
+             className={' w-[85%]   lg:w-[25em] md:w-[25em] h-[100%] fixed lightglass dark:glass flex flex-col  gap-4 py-4 items-center '}
              initial={{x:-400}}
              animate={{x:0}}
              exit={{x:-400}}
@@ -82,15 +83,22 @@ export const Sidebar = ({onClick,logOut}) => {
                     <AiFillHome color="white" className="text-2xl fill-blue-600 lg:text-3xl "/>
                 </div>
                  <div onClick={() => history.push("/user")} className={`shadow-2xl border font-mono flex justify-center items-center border  h-fit w-[90%] py-2 primary `}>
-                     <FaUserEdit color="white" className="text-2xl  fill-amber-600 lg:text-3xl "/>
+                     <FaUserEdit color="white" className="text-2xl  fill-red-600 lg:text-3xl "/>
                  </div>
+
+                     <ViewMode/>
+
                  <div onClick={() => setShow(true)} className={`shadow-2xl font-mono border flex justify-center items-center h-fit w-[90%] border py-2 bg-green-600 rounded-r-xl primary`}>
                      <BiMessageAdd color="white" className="text-2xl fill-green-600 lg:text-3xl "/>
                  </div>
              </div>
              <Viewer/>
 
-             <input type={"button"} value={'SIGN OUT'} onClick={logOut} className={`shadow-2xl font-mono  h-fit w-[90%] py-2 bg-red-700 rounded-xl`}/>
+
+
+
+
+             <input type={"button"} value={'SIGN OUT'} onClick={logOut} className={`shadow-2xl font-mono text-white h-fit w-[90%] py-2 bg-red-700 rounded-xl`}/>
 
          </motion.div>
 

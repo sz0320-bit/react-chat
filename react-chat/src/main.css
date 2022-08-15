@@ -7,23 +7,29 @@
     transition-duration: 200ms;
 }
 .secondary{
-    @apply bg-[rgba(0,0,0,0.08)] dark:bg-[rgba(0,0,0,0.85)];
+    @apply bg-[rgba(0,0,0,0.1)] dark:bg-[rgba(0,0,0,0.85)];
     transition-duration: 200ms;
 }
 
 
 *{
-    @apply text-white;
+    @apply text-black dark:text-white;
+
 }
 body{
-    @apply primary  !important;
+    @apply secondary  ;
 
 }
 .no-scrollbar::-webkit-scrollbar {
     display: none;
 }
 .glass{
-    background: rgba(0, 0, 0, 0.4);
+    background: rgba(0, 0, 0, 0.4) !important;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1) !important;
+    backdrop-filter: blur(15.2px) !important;
+    -webkit-backdrop-filter: blur(15.2px) !important;
+}
+.sampleGlass{
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(15.2px);
     -webkit-backdrop-filter: blur(15.2px);

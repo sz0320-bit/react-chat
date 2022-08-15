@@ -303,7 +303,7 @@ export const PrivateBox = ({match}) => {
             exit={{opacity:0}}
             transition={{duration:0.2}}>
             <div className={`flex flex-col absolute h-[92.5%]  w-full`}>
-            <div className={`border-b-2 flex px-3 py-2 gap-2 lg:gap-5 rounded-b-[1.5em] items-center h-fit w-full`}>
+            <div className={`border-b-2 dark:border-white border-gray-700 shadow-2xl flex px-3 py-2 gap-2 lg:gap-5 rounded-b-[1.5em] items-center h-fit w-full`}>
                 <div className={` w-fit ml-1 flex justify-center items-center`}>
                     <SidebarButton onClick={() => setShow(true)}/>
                 </div>
