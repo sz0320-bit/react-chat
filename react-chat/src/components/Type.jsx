@@ -34,7 +34,7 @@ const Type = ({onSubmit}) => {
 
     return (
         <>
-            <form onSubmit={submitTask} name={'main-form'} className={`w-full h-fit   py-3   rounded-xl bg-black-500 h-min-[7.4%]  absolute bottom-0 flex  items-center`}>
+            <form onSubmit={submitTask} name={'main-form'} className={`w-full h-fit      rounded-xl bg-black-500 h-[7.4%] mb-2 absolute bottom-0 flex  items-center`}>
                 <motion.div
                     transition={{duration: 0.3}}
                     className={'w-full max-w-full mx-3 h-fit p-1.5 primary min-h-[2.75em] border border-gray-700 dark:border-white flex items-center rounded-3xl'}>

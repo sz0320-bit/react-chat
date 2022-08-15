@@ -4,7 +4,7 @@ import Type from "./Type.jsx";
 import {Enter} from "./Enter.jsx";
 import {useAuthState} from "react-firebase-hooks/auth";
 import firebase from "../firebase";
-import {BiLogOut, BsInfoCircle, MdOutlineReadMore} from "react-icons/all.js";
+import {AiFillGithub} from "react-icons/all.js";
 import {db,auth} from "../firebase";
 import {AnimatePresence, motion} from "framer-motion";
 import { query, orderBy, limit } from "firebase/firestore";
@@ -15,6 +15,7 @@ import {uploadBytes} from "firebase/storage";
 import { Timestamp } from "firebase/firestore";
 import {Sidebar} from "./Sidebar";
 import SidebarButton from "./SidebarButton";
+import redirect from "react-router-dom/es/Redirect.js";
 
 
 
@@ -227,12 +228,12 @@ const Box = () => {
                         <div style={{backgroundImage:`url(${reactSvg})`,backgroundSize:"80% 80%",backgroundRepeat:"no-repeat", backgroundPosition:"center"}} className={`h-12 w-12 rounded-[5em] `}></div>
                         <div className={`text-lg font-extrabold`}>Main Chat</div>
                     </div>
-                    <div className={` w-fit mr-1 flex justify-center items-center`}>
-                        <BsInfoCircle className={`text-[1.5em] invisible lg:text-[2em]`} />
-                    </div>
+                    <a href={'https://github.com/sz0320-bit/react-chat'} className={` w-fit mr-1 flex justify-center items-center`}>
+                        <AiFillGithub  className={`text-[2em]  lg:text-[2.5em]`} />
+                    </a>
                 </div>
                 <div
-                    className={` w-screen overflow-scroll  no-scrollbar overflow-x-hidden h-[91%]     flex justify-start flex-col py-5 mb-3`}>
+                    className={` w-screen overflow-scroll  no-scrollbar overflow-x-hidden h-full     flex justify-start flex-col py-5 `}>
 
                     {!loading ?
                         <>
