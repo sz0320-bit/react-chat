@@ -130,8 +130,8 @@ export const SidebarChat = ({users}) => {
             initial={{y:-200}}
             animate={{y:0}}
             exit={{y:-200}}
-            transition={{duration:0.15}}
-            onClick={redirect} className={`rounded-2xl border-2  ${notif && users.user1 !== users.user2 ? 'border-r-red-800 border-r-8 border-gray-800':'border-gray-800'} p-2 px-3 shadow-2xl w-full max-h-[5em]  flex justify-center items-center  flex-row bg-gray-800`}>
+            transition={{duration:0.3}}
+            onClick={redirect} className={`rounded-2xl border-2  ${notif && users.user1 !== users.user2 ? 'border-r-red-800 border-r-8 border-gray-800':'border-gray-800'} p-2 px-3 shadow-2xl w-full max-h-[5em]  flex justify-center items-center  flex-row bg-neutral-800`}>
             {userPfp && userName && message ?
                 <>
                 <div className={`w-[21%] min-w-[4em] h-[100%] flex justify-center items-center `}>

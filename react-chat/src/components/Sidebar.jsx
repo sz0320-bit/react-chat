@@ -73,7 +73,7 @@ export const Sidebar = ({onClick,logOut}) => {
              exit={{x:-400}}
              transition={{
                  duration: 0.3,
-                 bounce: 0
+                 bounce: 0.0
              }}>
              <button className={" h-7.5 bg-white rounded p-0.5 text-black   w-[90%] flex justify-center"} onClick={onClick}>
                  <MdOutlineReadMore color="black"  className="text-2xl fill-black lg:text-3xl rotate "/>

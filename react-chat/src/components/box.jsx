@@ -142,22 +142,44 @@ const Box = () => {
     }
 
     const checkConsecutive = (x,y) => {
-        if(y === undefined || x === undefined || x === null || y === null) {
-            return true;
-        }else if(x.user === y.user || x.user === user.uid){
-            return false;
-        }else{
-            return true;
+        try {
+            if (y === undefined || x === undefined || x === null || y === null) {
+                return true;
+            } else if (x.user === y.user || x.user === user.uid) {
+                return false;
+            } else {
+                return true;
+            }
+        }catch (e) {
+            console.log(e);
         }
     }
 
-    const checkCol = (x,y) => {
-        if(y === undefined || x === undefined || x === null || y === null) {
+    const checkColBelow = (x,y) => {
+        try{
+        if(y === undefined || x === undefined || x === null || y === null ||x.createdAt.seconds === undefined || x.createdAt.seconds === undefined || y.createdAt.seconds === null || y.createdAt.seconds === null ) {
             return false;
         }else if(x.user === y.user){
-            return true;
+           return x.createdAt.seconds-y.createdAt.seconds < 900
         }else{
             return false;
+        }
+        }catch (e) {
+            console.log(e);
+        }
+    }
+
+    const checkColAbove = (x,y) => {
+        try{
+        if(y === undefined || x === undefined || x === null || y === null ||x.createdAt.seconds === undefined || x.createdAt.seconds === undefined || y.createdAt.seconds === null || y.createdAt.seconds === null ) {
+            return false;
+        }else if(x.user === y.user){
+            return y.createdAt.seconds-x.createdAt.seconds < 900
+        }else{
+            return false;
+        }
+        }catch (e) {
+            console.log(e);
         }
     }
 
@@ -173,6 +195,17 @@ const Box = () => {
 
     }
 
+    const timeShow = (timeX,timeY) => {
+        try{
+        if(timeY.createdAt.seconds === undefined || timeX.createdAt.seconds === undefined || timeX.createdAt.seconds === null || timeY.createdAt.seconds === null) {
+            return false;
+        }else{
+            return timeX.createdAt.seconds-timeY.createdAt.seconds > 900;
+        }
+        }catch (e) {
+            console.log(e);
+        }
+    }
 
 
 
@@ -210,12 +243,14 @@ const Box = () => {
                                           id={chats.id}
                                           group={checkGroup(chats.user, chat[index - 1])}
                                           cons={checkConsecutive(chats, chat[index - 1])}
-                                          below={checkCol(chat[index + 1], chats)}
-                                          above={checkCol(chat[index - 1], chats)}
+                                          below={checkColBelow(chat[index + 1], chats)}
+                                          above={checkColAbove(chat[index - 1], chats)}
                                           user={chats.user}
                                           name={chats.name}
                                           avatar={chats.avatar}
-                                          text={chats.text}/>
+                                          text={chats.text}
+                                          time={timeShow(chats,chat[index-1])}
+                                          exactDate={chats.createdAt} />
                                 </AnimatePresence>
                             )): <div className={`flex justify-center items-center h-[100%] w-[100%]`}><div>Error</div></div>}
                         </> : <div className={`w-[100%] h-[100%] absolute flex justify-center items-center `}> <ReactLoading type={'bars'} color={'white'} height={'20%'} width={'20%'} /></div>

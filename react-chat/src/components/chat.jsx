@@ -4,13 +4,13 @@ import {motion} from "framer-motion";
 import {useHistory} from "react-router-dom";
 import {useEffect, useState} from "react";
 import ProfileAlt from "../assets/profileAlt.webp";
+import moment from "moment";
 
-
-const Chat = ({user,text,group,name,index,cons,above,below,time}) => {
+const Chat = ({user,text,group,name,index,cons,above,below,time,exactDate}) => {
     const [users,load] = useAuthState(firebase.auth());
     const [avatar,setAvatar] = useState(ProfileAlt);
     const pic = avatar;
-    //functions that gets the first word from a string
+//functions that gets the first word from a string
     const getFirstWord = (str) => {
         return str.split(" ")[0];
     }
@@ -50,16 +50,24 @@ const Chat = ({user,text,group,name,index,cons,above,below,time}) => {
 * */
 
     return (
+        <>
+            { time &&
+        <div className={`flex w-full h-10 justify-center items-center dark:text-gray-400 text-[0.8rem] m-2 mt-5 `}>
+            {moment(exactDate.seconds * 1000).calendar()}
+        </div>
+            }
+
+
         <motion.div
 
             initial={{opacity:0,scale:0.5}}
             animate={{opacity:1,scale:1}}
             exit={{opacity:0,scale:0.5}}
-            className={`w-full  px-2.5 ${cons && index !== 0 ? 'mt-5':''}   ${index === 0 ? 'mt-auto': ''}   ${above || below ? 'py-0.5' : 'py-1'} flex gap-1 ${!group && user !==  users.uid && index !== 0 ? 'mt-7':''} ${!group && user ===  users.uid && index !== 0 ? 'mt-1':''} items-center ${user ===  users.uid ? 'justify-end':''}`}>
+            className={`w-full  px-2.5 ${cons && index !== 0 ? 'mt-5':''}   ${index === 0 ? 'mt-auto': ''}   ${above || below ? 'py-0.5' : 'py-1'} flex gap-1 ${!group && user !==  users.uid && !time && index !== 0 ? 'mt-7':''} ${!group && user ===  users.uid && index !== 0 ? 'mt-1':''} items-center ${user ===  users.uid ? 'justify-end':''}`}>
             {user !== users.uid ? <div>
-                {avatar ? <div onClick={() => history.push(`/profile/${user}`)}  className={`w-8  rounded-[5em] flex justify-center items-center h-8 dark:border-white border border-gray-800  ${group ? 'invisible':''}`} style={{backgroundImage:`url(${avatar})`, backgroundSize:'100% 100%'}}></div>
+                {avatar ? <div onClick={() => history.push(`/profile/${user}`)}  className={`w-8  rounded-[5em] flex justify-center items-center h-8 dark:border-white border border-gray-800  ${group && !time ? 'invisible':''}`} style={{backgroundImage:`url(${avatar})`, backgroundSize:'100% 100%'}}></div>
                     :
-                    <div onClick={() => history.push(`/profile/${user}`)}  className={`w-8 rounded-[5em] flex justify-center items-center h-7 dark:border-white border border-gray-800  ${group ? 'invisible':''}`}>{name[0].toUpperCase()}</div>
+                    <div onClick={() => history.push(`/profile/${user}`)}  className={`w-8 rounded-[5em] flex justify-center items-center h-7 dark:border-white border border-gray-800  ${group && !time ? 'invisible':''}`}>{name[0].toUpperCase()}</div>
                 }
             </div> : null}
             <div className={'w-max  max-w-[75%] break-all'}>
@@ -76,12 +84,13 @@ const Chat = ({user,text,group,name,index,cons,above,below,time}) => {
             </div>
             </div>
             {user === users.uid ? <div>
-                {pic ? <div onClick={() => history.push(`/profile/${user}`)}  className={`w-8 rounded-[5em] flex justify-center items-center h-8 dark:border-white border border-gray-800  ${group ? 'invisible':''}`} style={{backgroundImage:`url(${pic})`, backgroundSize:'100% 100%'}}></div>
+                {pic ? <div onClick={() => history.push(`/profile/${user}`)}  className={`w-8 rounded-[5em] flex justify-center items-center h-8 dark:border-white border border-gray-800  ${group && !time ? 'invisible':''}`} style={{backgroundImage:`url(${pic})`, backgroundSize:'100% 100%'}}></div>
                     :
-                    <div onClick={() => history.push(`/profile/${user}`)}  className={`w-8 rounded-[5em] flex justify-center items-center h-7 dark:border-white border border-gray-800  ${group ? 'invisible':''}`}>{name[0].toUpperCase()}</div>
+                    <div onClick={() => history.push(`/profile/${user}`)}  className={`w-8 rounded-[5em] flex justify-center items-center h-7 dark:border-white border border-gray-800  ${group && !time ? 'invisible':''}`}>{name[0].toUpperCase()}</div>
                 }
             </div>: null}
         </motion.div>
+        </>
     )
 }
 
